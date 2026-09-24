@@ -271,6 +271,49 @@ def main():
             except Exception as e:
                 logging.error(f"Erro ao buscar posts no feed para o termo '{kw}': {e}")
         
+        # --- Buscando em Company Pages Específicas ---
+        target_companies = ['home-office-vagas-remotas', 'nerdin', 'vagas-remotas-net']
+        for company in target_companies:
+            try:
+                logging.info(f"Buscando posts da company page: {company}")
+                updates = api.get_company_updates(company, max_results=30)
+                if not updates:
+                    continue
+                
+                for post in updates:
+                    post_str = json.dumps(post)
+                    # Extrair o texto principal do post usando regex simples
+                    texts = re.findall(r'"text":\s*"([^"]+)"', post_str)
+                    post_text = max(texts, key=len) if texts else ""
+                    
+                    # Remover quebras de linha escapadas para limpar o texto
+                    post_text = post_text.replace('\\n', ' ').strip()
+                    
+                    if len(post_text) < 30:
+                        continue
+                        
+                    urn = post.get("urn", "")
+                    link_post = f"https://www.linkedin.com/feed/update/{urn}/" if urn else f"https://www.linkedin.com/company/{company}/posts/"
+                    
+                    vagas_encontradas.append({
+                        "nome_empresa": f"Página: {company.replace('-', ' ').title()}",
+                        "logo_empresa": "",
+                        "titulo_vaga": f"Oportunidade via {company.title()}",
+                        "descricao_resumida": post_text[:250] + "..." if len(post_text) > 250 else post_text,
+                        "salario": "Acessar o post para detalhes",
+                        "link": link_post,
+                        "candidaturas": "Veja no post",
+                        "termo_busca": "Grupos e Páginas",
+                        "concorrencia": {
+                            "comentarios": 0, 
+                            "compartilhamentos": 0 
+                        },
+                        "detalhes": {"full_text": post_text, "type": "company_post"}
+                    })
+                time.sleep(2)
+            except Exception as e:
+                logging.error(f"Erro ao buscar posts da company {company}: {e}")
+        
         # Ordenando por menor concorrência
         logging.info("Ordenando vagas capturadas pelo critério de menor concorrência...")
         vagas_encontradas.sort(key=lambda x: (x["concorrencia"]["comentarios"], x["concorrencia"]["compartilhamentos"]))
