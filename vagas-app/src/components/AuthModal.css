@@ -1,0 +1,43 @@
+.auth-overlay {
+  z-index: 2000;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 48px 40px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-switch {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-switch button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-switch button:hover {
+  text-decoration: underline;
+}
+
+.success-msg {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #059669 !important;
+}

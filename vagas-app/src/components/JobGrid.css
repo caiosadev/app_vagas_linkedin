@@ -1,0 +1,51 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.main-header {
+  margin-bottom: 24px;
+}
+
+.main-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+.main-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.highlight {
+  color: var(--primary-color);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  overflow-y: auto;
+  padding-right: 12px; /* Espaço para o scrollbar */
+  padding-bottom: 24px;
+  flex: 1;
+  scrollbar-gutter: stable;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-lg);
+  border: 1px dashed rgba(2, 132, 199, 0.3);
+}

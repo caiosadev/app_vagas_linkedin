@@ -1,0 +1,479 @@
+{
+  "dashEntityUrn": "urn:li:fsd_jobPosting:4470979922",
+  "companyDetails": {
+    "com.linkedin.voyager.deco.jobs.web.shared.WebCompactJobPostingCompany": {
+      "companyResolutionResult": {
+        "entityUrn": "urn:li:fs_normalized_company:2811425",
+        "name": "Blacksmith Agency",
+        "logo": {
+          "image": {
+            "com.linkedin.common.VectorImage": {
+              "isStandardDynamicRangeEnforced": true,
+              "digitalmediaAsset": "urn:li:digitalmediaAsset:C560BAQHOt-B82sskLQ",
+              "artifacts": [
+                {
+                  "width": 200,
+                  "fileIdentifyingUrlPathSegment": "200_200/company-logo_200_200/0/1631330600833?e=1792022400&v=beta&t=mlTbXz_XAv7w9EK81uFExzrwZiH7YCk9RNgs-MFTE4M",
+                  "expiresAt": 1792022400000,
+                  "height": 200
+                },
+                {
+                  "width": 100,
+                  "fileIdentifyingUrlPathSegment": "100_100/company-logo_100_100/0/1631330600833?e=1792022400&v=beta&t=6cUSMO31p9Woi08iMptkq185t8pAN5B-zi8wLxHNeuc",
+                  "expiresAt": 1792022400000,
+                  "height": 100
+                },
+                {
+                  "width": 400,
+                  "fileIdentifyingUrlPathSegment": "400_400/company-logo_400_400/0/1631330600833?e=1792022400&v=beta&t=0CJP5sNooAgRuXiuI2aZ6tNIj18VJP3jPQw8n9J4RmA",
+                  "expiresAt": 1792022400000,
+                  "height": 400
+                }
+              ],
+              "rootUrl": "https://media.licdn.com/dms/image/v2/C560BAQHOt-B82sskLQ/company-logo_"
+            }
+          },
+          "type": "SQUARE_LOGO"
+        },
+        "$recipeType": "com.linkedin.voyager.deco.organization.shared.WebCompactCompany",
+        "universalName": "blacksmith-agency",
+        "url": "https://www.linkedin.com/company/blacksmith-agency"
+      },
+      "company": "urn:li:fs_normalized_company:2811425",
+      "$recipeType": "com.linkedin.voyager.deco.jobs.web.shared.WebCompactJobPostingCompany"
+    }
+  },
+  "jobState": "LISTED",
+  "description": {
+    "attributes": [
+      {
+        "start": 17,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 18,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 0,
+        "length": 19,
+        "type": {
+          "com.linkedin.pemberly.text.Bold": {}
+        },
+        "attributeKindUnion": {
+          "bold": {}
+        }
+      },
+      {
+        "start": 19,
+        "length": 7,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 26,
+        "length": 10,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 59,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 60,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 36,
+        "length": 25,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 19,
+        "length": 42,
+        "type": {
+          "com.linkedin.pemberly.text.List": {
+            "ordered": false
+          }
+        },
+        "attributeKindUnion": {
+          "list": {
+            "ordered": false
+          }
+        }
+      },
+      {
+        "start": 75,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 76,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 61,
+        "length": 16,
+        "type": {
+          "com.linkedin.pemberly.text.Bold": {}
+        },
+        "attributeKindUnion": {
+          "bold": {}
+        }
+      },
+      {
+        "start": 486,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 487,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 664,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 665,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 683,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 684,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 666,
+        "length": 19,
+        "type": {
+          "com.linkedin.pemberly.text.Bold": {}
+        },
+        "attributeKindUnion": {
+          "bold": {}
+        }
+      },
+      {
+        "start": 685,
+        "length": 112,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 797,
+        "length": 86,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 883,
+        "length": 93,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 1085,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 1086,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 976,
+        "length": 111,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 685,
+        "length": 402,
+        "type": {
+          "com.linkedin.pemberly.text.List": {
+            "ordered": false
+          }
+        },
+        "attributeKindUnion": {
+          "list": {
+            "ordered": false
+          }
+        }
+      },
+      {
+        "start": 1101,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 1102,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 1087,
+        "length": 16,
+        "type": {
+          "com.linkedin.pemberly.text.Bold": {}
+        },
+        "attributeKindUnion": {
+          "bold": {}
+        }
+      },
+      {
+        "start": 1103,
+        "length": 79,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 1182,
+        "length": 118,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 1300,
+        "length": 102,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 1452,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 1453,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 1402,
+        "length": 52,
+        "type": {
+          "com.linkedin.pemberly.text.ListItem": {}
+        },
+        "attributeKindUnion": {
+          "listItem": {}
+        }
+      },
+      {
+        "start": 1103,
+        "length": 351,
+        "type": {
+          "com.linkedin.pemberly.text.List": {
+            "ordered": false
+          }
+        },
+        "attributeKindUnion": {
+          "list": {
+            "ordered": false
+          }
+        }
+      },
+      {
+        "start": 1466,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 1467,
+        "length": 1,
+        "type": {
+          "com.linkedin.pemberly.text.LineBreak": {}
+        },
+        "attributeKindUnion": {
+          "lineBreak": {}
+        }
+      },
+      {
+        "start": 1454,
+        "length": 14,
+        "type": {
+          "com.linkedin.pemberly.text.Bold": {}
+        },
+        "attributeKindUnion": {
+          "bold": {}
+        }
+      }
+    ],
+    "text": "Blacksmith Agency\n\n Design Full time Remote (Latin America)\n\nAbout The Role\n\nBlacksmith Agency builds websites and marketing programs for clients across the US. As Senior Product Designer, Design Systems at Blacksmith, you own how our client design systems get built. You take a brand and a few reference sites, then extract the pattern into a working system: tokens, variables, modes, and core components a build pipeline can execute without asking you questions. Precision is the job.\n\nThis is a senior, systems-first seat. Not one-off pages, not maintenance. You stand up new systems fast and get them right the first time, across several client brands at once.\n\nWhat You Will Own\n\nBuild token architecture in Figma using variables, modes, and semantic naming our pipeline can read predictably.Ship core component libraries that hold up across an entire site, not just a homepage.Document the system so a developer or an automated pipeline can execute it without questions.Work across several client brands at once, each looking distinctly different, with the same structural rigor.\n\nWhat You Bring\n\n4+ years designing for the web, with real design system work in your portfolio.Fluency in Figma variables, component properties, auto layout, and variants. Actual architecture, not just tidy files.A portfolio where the work looks different from client to client but the rigor underneath is the same.Strong English and overlap with US business hours.\n\nHow To Apply\n\nApply in two minutes at the link. Your application is reviewed once you finish a short 6 minute Predictive Index assessment, so use the same email throughout."
+  },
+  "title": "Senior Product Designer, Design Systems (Remote, Sao Paulo)",
+  "entityUrn": "urn:li:fs_normalized_jobPosting:4470979922",
+  "workRemoteAllowed": true,
+  "applyMethod": {
+    "com.linkedin.voyager.jobs.OffsiteApply": {
+      "applyStartersPreferenceVoid": true,
+      "companyApplyUrl": "https://apply.blacksmith.agency/wd/apply?src=linkedin-job-basic&pid=wd-r306",
+      "inPageOffsiteApply": false
+    }
+  },
+  "talentHubJob": false,
+  "formattedLocation": "Brazil",
+  "workplaceTypes": [
+    "urn:li:fs_workplaceType:2"
+  ],
+  "listedAt": 1790185304000,
+  "jobPostingId": 4470979922,
+  "$recipeType": "com.linkedin.voyager.deco.jobs.web.shared.WebLightJobPosting",
+  "workplaceTypesResolutionResults": {
+    "urn:li:fs_workplaceType:2": {
+      "localizedName": "Remote",
+      "$recipeType": "com.linkedin.voyager.deco.jobs.shared.WebJobDetailsWorkplaceType",
+      "entityUrn": "urn:li:fs_workplaceType:2"
+    }
+  }
+}
