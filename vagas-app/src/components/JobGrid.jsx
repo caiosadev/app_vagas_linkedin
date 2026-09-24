@@ -19,26 +19,44 @@ const JobGrid = ({ jobs, categoryName, newJobIds, clearNewJobs, onOpenNewsletter
             )}
           </p>
         </div>
-        <button 
-          className="newsletter-btn" 
-          onClick={onOpenNewsletter}
-          style={{
-            background: 'linear-gradient(135deg, #0284c7, #0369a1)',
-            color: '#fff',
-            border: 'none',
-            padding: '10px 16px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontWeight: '600',
-            fontSize: '0.9rem',
-            boxShadow: '0 4px 12px rgba(2, 132, 199, 0.4)',
-            transition: 'all 0.2s ease'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-        >
-          Receber vagas por E-mail 📩
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <a 
+            href="/tutorial.html" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              color: '#64748b',
+              textDecoration: 'none',
+              fontWeight: '600',
+              fontSize: '1rem',
+              transition: 'color 0.2s ease'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.color = '#0284c7'}
+            onMouseOut={(e) => e.currentTarget.style.color = '#64748b'}
+          >
+            Como Usar
+          </a>
+          <button 
+            className="newsletter-btn" 
+            onClick={onOpenNewsletter}
+            style={{
+              background: 'linear-gradient(135deg, #0284c7, #0369a1)',
+              color: '#fff',
+              border: 'none',
+              padding: '10px 16px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontSize: '0.9rem',
+              boxShadow: '0 4px 12px rgba(2, 132, 199, 0.4)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            Receber vagas por E-mail 📩
+          </button>
+        </div>
       </header>
 
       <div className="grid-container" onScroll={() => { if (newJobIds.size > 0) clearNewJobs() }}>
