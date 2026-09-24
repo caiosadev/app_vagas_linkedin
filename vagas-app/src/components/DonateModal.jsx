@@ -20,7 +20,7 @@ const DonateModal = ({ isOpen, onClose }) => {
 
         <div className="donate-header">
           <h2>Apoie o Projeto 💙</h2>
-          <p>Sua doação é fundamental para mantermos o app online e continuarmos desenvolvendo novas melhorias. Qualquer valor faz a diferença e ajuda a manter o projeto vivo!</p>
+          <p>Este é um projeto Open Source! Sua doação é o maior incentivo para continuarmos dedicando tempo ao desenvolvimento de novas funcionalidades e melhorias na plataforma. Qualquer valor faz a diferença!</p>
         </div>
 
         <div className="pix-image-container">

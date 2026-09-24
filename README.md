@@ -101,9 +101,9 @@ Este projeto é de uso educacional/demonstrativo. Desenvolvido com foco em arqui
 
 ## 💙 Apoie o Projeto
 
-Manter a infraestrutura de servidores, automações e disparo de e-mails em nuvem tem custos mensais. Se este projeto ajudou você a conseguir um emprego ou facilitou sua vida, considere fazer uma doação de qualquer valor via PIX!
+Este é um projeto **100% Open Source** e gratuito! Se esta aplicação ajudou você a conseguir um emprego, facilitou sua vida ou serviu de aprendizado, considere fazer uma doação via PIX.
 
-Sua contribuição garante que possamos adicionar mais recursos de IA e manter a extração ativa.
+Sua contribuição é o maior incentivo para continuarmos dedicando tempo ao desenvolvimento de novas funcionalidades, melhorias na IA e manutenção do código.
 
 🔗 **[Clique aqui para abrir a página de doação no App](/#apoie)** *(Ao hospedar, garanta que este link aponta para o caminho raiz da sua aplicação)*
 
