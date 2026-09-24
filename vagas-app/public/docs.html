@@ -561,7 +561,7 @@ score = round(similaridade[0][0] * 100)</pre>
 
             let found = false;
             sections.forEach(section => {
-                const text = section.innerText.toLowerCase();
+                const text = section.textContent.toLowerCase();
                 if (text.includes(term)) {
                     section.classList.add('active');
                     found = true;
