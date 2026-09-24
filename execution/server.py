@@ -369,7 +369,7 @@ def send_newsletter(frequency_target):
         vagas_path = os.path.join(BASE_DIR, '.tmp', 'vagas_extraidas.json')
         if not os.path.exists(vagas_path):
             # Fallback para o cache do app
-            vagas_path = os.path.join(os.path.dirname(BASE_DIR), 'vagas-app', 'src', 'vagasData.json')
+            vagas_path = os.path.join(os.path.dirname(BASE_DIR), 'src', 'vagasData.json')
             if not os.path.exists(vagas_path):
                 return
             
@@ -401,13 +401,35 @@ def send_newsletter(frequency_target):
             for v in vagas:
                 termo = v.get('termo_busca', '').lower()
                 titulo = v.get('titulo_vaga', '').lower()
-                
                 area_vaga = 'Vagas Gerais'
-                words_titulo = set(re.findall(r'\b\w+\b', titulo))
                 
-                if 'design' in termo or 'designer' in termo or 'design' in words_titulo or 'designer' in words_titulo or 'ux' in words_titulo or 'ui' in words_titulo:
+                # Regra exata do Web Designer
+                is_web_design = ('web design' in titulo or 
+                                 'webdesign' in titulo or 
+                                 'designer web' in titulo or 
+                                 ('vaga via post' in titulo and 'web designer' in termo))
+                
+                # Regras de Suporte e Atendimento (No app são 2 abas separadas, na newsletter é 1 categoria)
+                is_suporte = ('suporte' in titulo or 
+                              'help desk' in titulo or 
+                              'helpdesk' in titulo or 
+                              'service desk' in titulo or
+                              'technical support' in titulo or
+                              'tech support' in titulo or
+                              ('vaga via post' in titulo and 'suporte' in termo))
+                              
+                is_atendimento = ('atendimento' in titulo or 
+                                  'customer service' in titulo or 
+                                  'customer success' in titulo or 
+                                  'customer experience' in titulo or
+                                  'sucesso do cliente' in titulo or
+                                  'experiência do cliente' in titulo or
+                                  'relacionamento' in titulo or
+                                  ('vaga via post' in titulo and 'atendimento' in termo))
+
+                if is_web_design:
                     area_vaga = 'Web Design'
-                elif 'suporte' in termo or 'atendimento' in termo or 'suporte' in words_titulo or 'atendimento' in words_titulo or 'support' in words_titulo or 'desk' in words_titulo:
+                elif is_suporte or is_atendimento:
                     area_vaga = 'Suporte e Atendimento'
                     
                 if area_vaga not in vagas_por_area:
@@ -434,31 +456,58 @@ def send_newsletter(frequency_target):
             
             html_content = f"""
             <html>
-            <body style="font-family: Arial, sans-serif; color: #333; background: #f8fafc; padding: 20px;">
-                <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <h2 style="color: #0284c7; text-align: center;">Vagas e Oportunidades</h2>
-                    <p>Olá <b>{name}</b>,</p>
-                    <p>Separamos as melhores oportunidades remotas nas suas áreas de interesse:</p>
+            <body style="font-family: 'Inter', Arial, sans-serif; background-color: #f0f9ff; color: #0f172a; padding: 20px; margin: 0;">
+                <div style="max-width: 650px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.1); border-top: 5px solid #0284c7;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #0284c7; margin: 0; font-size: 24px; font-weight: 800;">Vagas e Oportunidades</h1>
+                        <p style="color: #64748b; font-size: 14px; margin-top: 8px;">As melhores oportunidades selecionadas para você</p>
+                    </div>
+                    
+                    <p style="font-size: 16px; color: #334155; line-height: 1.6;">Olá <b>{name}</b>,</p>
+                    <p style="font-size: 16px; color: #334155; line-height: 1.6; margin-bottom: 25px;">Aqui estão as duas vagas mais recentes de cada categoria que você escolheu no cadastro:</p>
             """
             
             # Agrupar vagas por área no HTML
             areas_presentes = set(v['categoria_area'] for v in vagas_filtradas)
             for area in sorted(areas_presentes):
                 html_content += f"""
-                    <div style="background: #f1f5f9; padding: 8px 15px; border-radius: 6px; margin: 25px 0 15px 0;">
-                        <h3 style="margin: 0; color: #0f172a; font-size: 16px; text-transform: uppercase;">📍 {area}</h3>
-                    </div>
+                    <div style="margin-top: 30px;">
+                        <h2 style="color: #0f172a; font-size: 20px; border-bottom: 2px solid #e0f2fe; padding-bottom: 10px; margin-bottom: 20px;">
+                            <span style="color: #0284c7;">■</span> {area}
+                        </h2>
                 """
                 vagas_da_area = [v for v in vagas_filtradas if v['categoria_area'] == area]
                 for v in vagas_da_area:
+                    desc = str(v.get('descricao_resumida', ''))[:150]
+                    local = v.get('localidade', 'Não informado')
                     html_content += f"""
-                        <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff;">
-                            <h3 style="margin: 0 0 10px 0; color: #0f172a; font-size: 18px;">{v.get('titulo_vaga')}</h3>
-                            <p style="margin: 0 0 5px 0; color: #64748b; font-size: 14px;">🏢 {v.get('nome_empresa')} | 👥 {v.get('candidaturas')}</p>
-                            <p style="margin: 0 0 15px 0; font-size: 14px; color: #475569;">{v.get('descricao_resumida', '')[:100]}...</p>
-                            <a href="{v.get('link')}" style="display: inline-block; padding: 8px 16px; background: #0ea5e9; color: #fff; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">Ver Vaga</a>
+                        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                            <h3 style="margin: 0 0 10px 0; color: #0f172a; font-size: 18px; font-weight: 700;">{v.get('titulo_vaga')}</h3>
+                            
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 15px;">
+                                <tr>
+                                    <td align="left">
+                                        <span style="display: inline-block; background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 8px;">🏢 {v.get('nome_empresa')}</span>
+                                        <span style="display: inline-block; background: #f0f9ff; color: #0284c7; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">📍 {local}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <p style="margin: 0 0 20px 0; color: #475569; font-size: 14px; line-height: 1.5;">{desc}...</p>
+                            
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td align="left" valign="middle">
+                                        <span style="color: #64748b; font-size: 13px;">👥 {v.get('candidaturas')} candidaturas</span>
+                                    </td>
+                                    <td align="right" valign="middle">
+                                        <a href="{v.get('link')}" style="display: inline-block; background-color: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;">Acessar Vaga</a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     """
+                html_content += "</div>"
             
             # Gera token de descadastro
             import jwt
@@ -469,10 +518,12 @@ def send_newsletter(frequency_target):
             unsubscribe_link = f"{app_url}/api/newsletter/unsubscribe?token={token}"
             
             html_content += f"""
-                    <p style="margin-top: 30px; font-size: 12px; color: #94a3b8; text-align: center;">
-                        Você está recebendo este e-mail porque se cadastrou no Vagas e Oportunidades.<br>
-                        Se não deseja mais receber estas vagas, <a href="{unsubscribe_link}" style="color: #64748b; text-decoration: underline;">clique aqui para descadastrar</a>.
-                    </p>
+                    <div style="margin-top: 40px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                        <p style="font-size: 12px; color: #94a3b8; line-height: 1.5;">
+                            Você está recebendo este e-mail porque se cadastrou no Vagas e Oportunidades.<br>
+                            Se não deseja mais receber estas vagas, <a href="{unsubscribe_link}" style="color: #0284c7; text-decoration: underline;">clique aqui para descadastrar</a>.
+                        </p>
+                    </div>
                 </div>
             </body>
             </html>
@@ -515,7 +566,7 @@ scheduler.start()
 def get_vagas():
     tmp_path = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
     if not os.path.exists(tmp_path):
-        tmp_path = os.path.join(os.path.dirname(BASE_DIR), 'vagas-app', 'src', 'vagasData.json')
+        tmp_path = os.path.join(os.path.dirname(BASE_DIR), 'src', 'vagasData.json')
     try:
         with open(tmp_path, "r", encoding="utf-8") as f:
             data = json.load(f)
