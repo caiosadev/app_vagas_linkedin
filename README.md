@@ -15,6 +15,10 @@ A plataforma foi desenhada para ser o assistente definitivo na busca por vagas. 
 5. **Assinatura de Newsletter Segmentada:** O usuário pode clicar no botão "Receber vagas por E-mail", escolher as áreas do seu interesse (ex: Web Design, Suporte e Atendimento, Vagas Gerais), e selecionar se quer receber e-mails 1x, 3x ou 5x ao dia.
 6. **Formulário de Contato e Suporte:** Canal direto com a administração do sistema, equipado com filtros anti-spam invisíveis, para relatar bugs ou enviar sugestões.
 
+### 📖 Tutorial Passo a Passo
+Preparamos um guia visual e detalhado para ajudar novos usuários a explorarem todas essas ferramentas. 
+[👉 Clique aqui para acessar o nosso Tutorial de Uso](#link-do-tutorial-sera-inserido-aqui)
+
 ---
 
 ## ⚙️ Como toda a aplicação funciona passo a passo?
