@@ -20,6 +20,10 @@ A plataforma foi desenhada para ser o assistente definitivo na busca por vagas. 
    - **Sistema de Caching/Fallback:** Caso não hajam vagas novíssimas naquela hora, o script consome os caches inteligentes locais para garantir que a oportunidade perfeita chegue na hora certa.
    - Preparado para integração imediata com ferramentas SMTP de ponta (SendPulse, Brevo, Resend) garantindo bypass de filtros Anti-Spam.
 7. **Formulário de Contato e Suporte:** Canal direto com a administração do sistema, equipado com filtros anti-spam.
+8. **Painel de Administração Protegido:** Rota de acesso exclusivo para gerenciamento e auditoria (`/admin/subscribers`).
+   - Acesso seguro via autenticação básica.
+   - Exibição do status dos inscritos (Ativos ou Inativos/Descadastrados) usando técnica de *Soft Delete* sem expor dados sigilosos à web.
+   - Exportação integral para CSV (Excel) com 1 clique para gestão analítica.
 
 ### 📖 Tutorial Passo a Passo
 Preparamos um guia visual e detalhado para ajudar novos usuários a explorarem todas essas ferramentas. 
