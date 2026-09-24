@@ -62,7 +62,7 @@
 .checkboxes-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
   background: #f8fafc;
   padding: 12px;
   border-radius: 8px;
@@ -76,7 +76,7 @@
   color: #334155;
   cursor: pointer;
   font-weight: 500;
-  padding: 4px 0;
+  padding: 2px 0;
 }
 
 .checkbox-label input[type="checkbox"] {
