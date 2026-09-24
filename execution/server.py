@@ -243,7 +243,7 @@ def analyze_profile():
     # 2. Carregar vagas atuais
     tmp_path = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
     if not os.path.exists(tmp_path):
-        tmp_path = os.path.join(BASE_DIR, 'vagasData.json')
+        tmp_path = os.path.join(BASE_DIR, 'src', 'vagasData.json')
         if not os.path.exists(tmp_path):
             return jsonify({"message": "O sistema está processando as vagas no momento. Por favor, aguarde alguns minutos e tente analisar novamente."}), 400
 
@@ -593,7 +593,7 @@ scheduler.start()
 def get_vagas():
     tmp_path = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
     if not os.path.exists(tmp_path):
-        tmp_path = os.path.join(BASE_DIR, 'vagasData.json')
+        tmp_path = os.path.join(BASE_DIR, 'src', 'vagasData.json')
     try:
         with open(tmp_path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -606,7 +606,7 @@ def get_vagas():
 @app.route('/api/status', methods=['GET'])
 def get_status():
     tmp_vagas = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
-    mock_vagas = os.path.join(BASE_DIR, 'vagasData.json')
+    mock_vagas = os.path.join(BASE_DIR, 'src', 'vagasData.json')
     try:
         dir_contents = os.listdir(BASE_DIR)
     except Exception as e:
