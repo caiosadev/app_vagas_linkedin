@@ -97,13 +97,13 @@
 
 .file-label {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 32px;
+  padding: 16px;
   border: 2px dashed rgba(2, 132, 199, 0.3);
-  border-radius: 16px;
+  border-radius: 12px;
   background: rgba(2, 132, 199, 0.02);
   color: var(--primary-color);
   cursor: pointer;
