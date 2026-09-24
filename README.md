@@ -27,7 +27,7 @@ A aplicação atua dividida em três pilares principais que operam sozinhos 24 h
 
 ### 1. Motor de Busca (Web Scraper)
 * O backend (em Python) possui uma rotina de *background jobs* operada pelo `apscheduler`. A cada 1 hora, de forma invisível, um robô acessa o LinkedIn e varre milhares de dados utilizando as credenciais de sistema.
-* Ele busca não apenas vagas listadas nas páginas corporativas, mas varre a **Timeline (Feed)** atrás de publicações de pessoas e recrutadores dizendo coisas como *"Vaga 100% remota"* ou *"Estamos contratando"*.
+* **Dupla Fonte de Extração:** Ele busca oportunidades oficiais listadas na **seção de Vagas do LinkedIn** e, simultaneamente, varre a **Timeline (Feed do LinkedIn)** atrás de posts de recrutadores divulgando oportunidades diretamente em publicações (ex: *"Estamos contratando"*, *"Vaga 100% remota"*). Essa dupla checagem garante que nenhuma oportunidade escondida passe despercebida.
 * Após a extração, o script analisa a "concorrência" daquela vaga (número de likes, comentários, candidaturas no LinkedIn) e salva apenas as melhores no banco de dados temporário.
 
 ### 2. A Inteligência de Análise (Matching Engine)
