@@ -379,8 +379,7 @@ def send_newsletter(frequency_target):
         if not vagas:
             return
             
-        # Top 5 vagas com menor concorrência
-        vagas = sorted(vagas, key=lambda x: (x.get('concorrencia', {}).get('comentarios', 0), x.get('concorrencia', {}).get('compartilhamentos', 0)))[:5]
+        # Removido o filtro global de Top 5 para podermos pegar 2 por categoria
         
         smtp_host = os.getenv('SMTP_HOST')
         smtp_port = os.getenv('SMTP_PORT')
@@ -397,23 +396,36 @@ def send_newsletter(frequency_target):
             sub_areas = sub['areas'] if 'areas' in sub.keys() and sub['areas'] else 'Todas'
             areas_list = [a.strip() for a in sub_areas.split(',')]
             
-            # Filtro das vagas pelas áreas escolhidas
-            vagas_filtradas = []
+            # Agrupar vagas por área primeiro
+            vagas_por_area = {}
             for v in vagas:
-                # Determinar a área da vaga com base no termo de busca
                 termo = v.get('termo_busca', '').lower()
+                titulo = v.get('titulo_vaga', '').lower()
+                
                 area_vaga = 'Vagas Gerais'
-                if 'design' in termo or 'designer' in termo:
+                if 'design' in termo or 'designer' in termo or 'design' in titulo or 'ux' in titulo or 'ui' in titulo:
                     area_vaga = 'Web Design'
-                elif 'suporte' in termo or 'atendimento' in termo:
+                elif 'suporte' in termo or 'atendimento' in termo or 'support' in titulo or 'desk' in titulo:
                     area_vaga = 'Suporte e Atendimento'
                     
-                # Se o usuário quer Todas ou a área da vaga está nas escolhidas
-                if 'Todas' in areas_list or area_vaga in areas_list:
-                    # Adiciona a vaga marcando a área para agrupamento
-                    v_copy = v.copy()
-                    v_copy['categoria_area'] = area_vaga
-                    vagas_filtradas.append(v_copy)
+                if area_vaga not in vagas_por_area:
+                    vagas_por_area[area_vaga] = []
+                vagas_por_area[area_vaga].append(v)
+            
+            # Filtro das vagas pelas áreas escolhidas: as 2 últimas de cada área
+            vagas_filtradas = []
+            areas_para_enviar = areas_list
+            if 'Todas' in areas_list:
+                areas_para_enviar = list(vagas_por_area.keys())
+                
+            for area in areas_para_enviar:
+                if area in vagas_por_area:
+                    # Pega as 2 "últimas" (primeiras da lista atual que já vem ordenada pelo scraper)
+                    vagas_da_area = vagas_por_area[area][:2]
+                    for v in vagas_da_area:
+                        v_copy = v.copy()
+                        v_copy['categoria_area'] = area
+                        vagas_filtradas.append(v_copy)
             
             if not vagas_filtradas:
                 continue # Não envia e-mail vazio se não tiver vaga para ele
