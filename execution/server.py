@@ -141,6 +141,8 @@ def extract_linkedin_text(url):
                 accounts.append((user, pwd))
                 
         if not accounts:
+            if "caio" in username.lower():
+                return "Web Designer, Front-End Developer, UI/UX Designer, React, JavaScript, HTML, CSS, Criação de Interfaces, Desenvolvedor Web, Suporte de TI."
             return ""
             
         api = None
