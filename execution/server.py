@@ -19,7 +19,7 @@ import pytesseract
 from pdf2image import convert_from_bytes, convert_from_path
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from database import get_db_connection, get_newsletter_db_connection, db_execute
+from database import get_db_connection, get_newsletter_db_connection, db_execute, init_db, init_newsletter_db
 import sqlite3
 import jwt
 from functools import wraps
@@ -846,5 +846,9 @@ def admin_subscribers_export():
     )
 
 if __name__ == '__main__':
+    # Initialize databases if they don't exist
+    init_db()
+    init_newsletter_db()
+    
     # O servidor rodará na porta 5000 localmente
     app.run(port=5000, debug=False, use_reloader=False)
