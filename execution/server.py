@@ -292,6 +292,8 @@ def user_profile(current_user_id):
     if request.method == 'GET':
         user = db_execute(conn, 'SELECT name, login, linkedin_url, resume_path FROM users WHERE id = ?', (current_user_id,)).fetchone()
         conn.close()
+        if not user:
+            return jsonify({'message': 'Usuário não encontrado'}), 404
         return jsonify({
             'name': user['name'],
             'login': user['login'],
@@ -603,9 +605,18 @@ def get_vagas():
 
 @app.route('/api/status', methods=['GET'])
 def get_status():
+    tmp_vagas = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
+    mock_vagas = os.path.join(os.path.dirname(BASE_DIR), 'src', 'vagasData.json')
     return jsonify({
         "is_running": state["is_running"],
-        "last_run_time": state["last_run_time"].isoformat() if state["last_run_time"] else None
+        "last_run_time": state["last_run_time"].isoformat() if state["last_run_time"] else None,
+        "debug_paths": {
+            "BASE_DIR": BASE_DIR,
+            "tmp_vagas": tmp_vagas,
+            "tmp_vagas_exists": os.path.exists(tmp_vagas),
+            "mock_vagas": mock_vagas,
+            "mock_vagas_exists": os.path.exists(mock_vagas)
+        }
     }), 200
 
 @app.route('/api/refresh', methods=['POST'])
