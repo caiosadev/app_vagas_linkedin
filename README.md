@@ -96,3 +96,18 @@ Acesse `http://localhost:5173`.
 
 ## Autorização e Licença
 Este projeto é de uso educacional/demonstrativo. Desenvolvido com foco em arquitetura de dados limpa e melhores práticas de Engenharia de Software.
+
+---
+
+## 💙 Apoie o Projeto
+
+Manter a infraestrutura de servidores, automações e disparo de e-mails em nuvem tem custos mensais. Se este projeto ajudou você a conseguir um emprego ou facilitou sua vida, considere fazer uma doação de qualquer valor via PIX!
+
+Sua contribuição garante que possamos adicionar mais recursos de IA e manter a extração ativa.
+
+🔗 **[Clique aqui para abrir a página de doação no App](/#apoie)** *(Ao hospedar, garanta que este link aponta para o caminho raiz da sua aplicação)*
+
+**Ou faça a doação direta via Chave PIX:**
+`1ef67cfd-6d20-41aa-960a-37af9bc06a19`
+
+Muito obrigado pelo apoio! 🚀

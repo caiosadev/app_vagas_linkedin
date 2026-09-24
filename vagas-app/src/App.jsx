@@ -27,6 +27,13 @@ function App() {
     if (savedUser && token) {
       setUser(JSON.parse(savedUser));
     }
+
+    // Verifica se a URL contém o link de doação
+    if (window.location.hash === '#apoie') {
+      setIsDonateModalOpen(true);
+      // Remove o hash da URL para ficar limpo
+      window.history.replaceState(null, null, window.location.pathname);
+    }
   }, []);
 
   const fetchVagas = async () => {
