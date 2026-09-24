@@ -6,7 +6,7 @@ from linkedin_api import Linkedin
 import time
 import threading
 from datetime import datetime, timedelta
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response, send_file
 from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
 from linkedin_scraper import main as run_scraper
@@ -360,7 +360,7 @@ def send_newsletter(frequency_target):
     try:
         print(f"Enviando newsletter para frequência {frequency_target}...")
         conn = get_newsletter_db_connection()
-        subscribers = conn.execute("SELECT name, email, areas FROM subscribers WHERE frequency = ?", (frequency_target,)).fetchall()
+        subscribers = conn.execute("SELECT name, email, areas FROM subscribers WHERE frequency = ? AND is_active = 1", (frequency_target,)).fetchall()
         conn.close()
         
         if not subscribers:
@@ -465,6 +465,10 @@ def send_newsletter(frequency_target):
             """
             
             msg = EmailMessage()
+            
+            with open(os.path.join(BASE_DIR, '.tmp', 'email_debug.html'), 'w') as dbg_file:
+                dbg_file.write(html_content)
+                
             msg.set_content("Ative o HTML para visualizar as vagas.")
             msg.add_alternative(html_content, subtype='html')
             msg['Subject'] = 'Suas Vagas Selecionadas - Vagas e Oportunidades'
@@ -580,9 +584,9 @@ def newsletter_subscribe():
         cursor = conn.cursor()
         cursor.execute("SELECT id FROM subscribers WHERE email = ?", (email,))
         if cursor.fetchone():
-            cursor.execute("UPDATE subscribers SET name = ?, frequency = ?, areas = ? WHERE email = ?", (name, frequency, areas_str, email))
+            cursor.execute("UPDATE subscribers SET name = ?, frequency = ?, areas = ?, is_active = 1 WHERE email = ?", (name, frequency, areas_str, email))
         else:
-            cursor.execute("INSERT INTO subscribers (name, email, frequency, areas) VALUES (?, ?, ?, ?)", (name, email, frequency, areas_str))
+            cursor.execute("INSERT INTO subscribers (name, email, frequency, areas, is_active) VALUES (?, ?, ?, ?, 1)", (name, email, frequency, areas_str))
         conn.commit()
         conn.close()
         return jsonify({"success": True})
@@ -603,7 +607,7 @@ def newsletter_unsubscribe():
         
         if email and data.get('action') == 'unsubscribe':
             conn = get_newsletter_db_connection()
-            conn.execute("DELETE FROM subscribers WHERE email = ?", (email,))
+            conn.execute("UPDATE subscribers SET is_active = 0 WHERE email = ?", (email,))
             conn.commit()
             conn.close()
             
@@ -688,6 +692,78 @@ def handle_contact():
     except Exception as e:
         print(f"Erro ao enviar e-mail: {e}")
         return jsonify({"error": "Erro interno do servidor ao tentar enviar a mensagem."}), 500
+
+def check_auth(auth):
+    return auth and auth.username == 'admin' and auth.password == 'admin123'
+
+def require_auth():
+    return Response('Acesso negado. Por favor, insira as credenciais de administrador.', 401, {'WWW-Authenticate': 'Basic realm="Admin Access"'})
+
+@app.route('/admin/subscribers', methods=['GET'])
+def admin_subscribers():
+    if not check_auth(request.authorization):
+        return require_auth()
+    
+    conn = get_newsletter_db_connection()
+    subscribers = conn.execute("SELECT * FROM subscribers ORDER BY created_at DESC").fetchall()
+    conn.close()
+    
+    rows = ""
+    for s in subscribers:
+        status = "<span style='color:green'>Ativo</span>" if s['is_active'] else "<span style='color:red'>Descadastrado</span>"
+        rows += f"<tr><td>{s['id']}</td><td>{s['name']}</td><td>{s['email']}</td><td>{s['frequency']}</td><td>{s['areas']}</td><td>{status}</td><td>{s['created_at']}</td></tr>"
+
+    html = f"""
+    <html>
+    <head>
+        <title>Painel Admin - Subscribers</title>
+        <style>
+            body {{ font-family: Arial, sans-serif; padding: 20px; background: #f8fafc; }}
+            table {{ width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }}
+            th, td {{ padding: 12px; border: 1px solid #ddd; text-align: left; }}
+            th {{ background-color: #0284c7; color: white; }}
+            .header-flex {{ display: flex; justify-content: space-between; align-items: center; }}
+            .btn-export {{ background: #16a34a; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; }}
+        </style>
+    </head>
+    <body>
+        <div class="header-flex">
+            <h2>Gestão de Assinantes da Newsletter</h2>
+            <a href="/admin/subscribers/export" class="btn-export">Exportar para CSV (Excel)</a>
+        </div>
+        <table>
+            <tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Frequência</th><th>Áreas</th><th>Status</th><th>Data Cadastro</th></tr>
+            {rows}
+        </table>
+    </body>
+    </html>
+    """
+    return html
+
+@app.route('/admin/subscribers/export', methods=['GET'])
+def admin_subscribers_export():
+    if not check_auth(request.authorization):
+        return require_auth()
+    
+    conn = get_newsletter_db_connection()
+    subscribers = conn.execute("SELECT * FROM subscribers ORDER BY created_at DESC").fetchall()
+    conn.close()
+    
+    import csv
+    from io import StringIO
+    si = StringIO()
+    cw = csv.writer(si)
+    cw.writerow(['ID', 'Nome', 'Email', 'Frequencia', 'Areas', 'Status', 'Data_Cadastro'])
+    
+    for s in subscribers:
+        status = "Ativo" if s['is_active'] else "Descadastrado"
+        cw.writerow([s['id'], s['name'], s['email'], s['frequency'], s['areas'], status, s['created_at']])
+        
+    return Response(
+        si.getvalue(),
+        mimetype="text/csv",
+        headers={"Content-disposition": "attachment; filename=assinantes.csv"}
+    )
 
 if __name__ == '__main__':
     # O servidor rodará na porta 5000 localmente

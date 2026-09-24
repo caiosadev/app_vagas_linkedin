@@ -39,6 +39,7 @@ def init_newsletter_db():
             email TEXT UNIQUE NOT NULL,
             frequency TEXT NOT NULL,
             areas TEXT DEFAULT 'Todas',
+            is_active INTEGER DEFAULT 1,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
