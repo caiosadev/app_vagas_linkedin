@@ -43,6 +43,15 @@ function App() {
       if (response.ok) {
         const data = await response.json();
         
+        // Remover duplicatas baseadas no link ou titulo+empresa
+        const seenLinks = new Set();
+        const dedupData = data.filter(v => {
+          const key = (v.link && v.link.includes('http')) ? v.link : `${v.titulo_vaga}_${v.nome_empresa}`;
+          if (seenLinks.has(key)) return false;
+          seenLinks.add(key);
+          return true;
+        });
+        
         // Helper function to extract number from candidaturas string
         const parseCandidaturas = (str) => {
           if (!str || str === 'Não informado') return 999999;
@@ -51,7 +60,7 @@ function App() {
         };
 
         // Sort data by candidaturas ascending
-        const sortedData = data.sort((a, b) => parseCandidaturas(a.candidaturas) - parseCandidaturas(b.candidaturas));
+        const sortedData = dedupData.sort((a, b) => parseCandidaturas(a.candidaturas) - parseCandidaturas(b.candidaturas));
 
         setJobs(prevJobs => {
           if (prevJobs.length > 0) {
