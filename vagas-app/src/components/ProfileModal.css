@@ -100,15 +100,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px;
+  gap: 4px;
+  padding: 8px;
   border: 2px dashed rgba(2, 132, 199, 0.3);
   border-radius: 12px;
   background: rgba(2, 132, 199, 0.02);
   color: var(--primary-color);
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 500;
   text-align: center;
 }
@@ -168,10 +168,10 @@
 }
 
 .file-label .icon {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   background: white;
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
   align-items: center;
