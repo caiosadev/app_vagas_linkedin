@@ -183,29 +183,29 @@ function App() {
     const title = (job.titulo_vaga || "").toLowerCase();
 
     if (activeCategory === 'web-designer') {
-      // Filtrar estritamente pelo título da vaga usando variações de "web designer"
       return title.includes('web design') || 
              title.includes('webdesign') || 
-             title.includes('designer web');
+             title.includes('designer web') ||
+             (title.includes('vaga via post') && term.includes('web designer'));
     }
     if (activeCategory === 'analista-suporte') {
-      // Filtrar estritamente pelo título usando variações comuns de suporte técnico e analista de suporte
       return title.includes('suporte') || 
              title.includes('help desk') || 
              title.includes('helpdesk') || 
              title.includes('service desk') ||
              title.includes('technical support') ||
-             title.includes('tech support');
+             title.includes('tech support') ||
+             (title.includes('vaga via post') && term.includes('suporte'));
     }
     if (activeCategory === 'analista-atendimento') {
-      // Filtrar estritamente pelo título usando variações da área de atendimento e sucesso do cliente
       return title.includes('atendimento') || 
              title.includes('customer service') || 
              title.includes('customer success') || 
              title.includes('customer experience') ||
              title.includes('sucesso do cliente') ||
              title.includes('experiência do cliente') ||
-             title.includes('relacionamento');
+             title.includes('relacionamento') ||
+             (title.includes('vaga via post') && term.includes('atendimento'));
     }
     return false;
   }).sort((a, b) => {
