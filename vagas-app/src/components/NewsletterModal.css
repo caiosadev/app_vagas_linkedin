@@ -90,5 +90,5 @@
 
 .checkbox-label span {
   display: inline-block;
-  transform: translateY(1px); /* Slight nudge to center text perfectly with the box */
+  transform: translateY(-1.5px); /* Move o texto levemente para cima para alinhar com o centro do box */
 }
