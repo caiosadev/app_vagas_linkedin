@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação do Desenvolvedor - Vagas App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #e2e8f0;
+            --bg-panel: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --primary: #ef4444; /* Vermelho/Rosa similar ao print */
+            --primary-light: #fef2f2;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            /* Background inspirador como no print */
+            background: url('https://images.unsplash.com/photo-1506744626753-1fa44df31c7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .app-window {
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+            background: var(--bg-panel);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Topbar */
+        .topbar {
+            height: 60px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            gap: 24px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            width: 250px;
+        }
+
+        .topbar-spacer { flex: 1; }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Body (Sidebar + Content) */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            border-right: 1px solid var(--border-color);
+            background: #fafaf9;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 16px;
+        }
+
+        .sidebar-tabs span {
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .sidebar-tabs span.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .sidebar-section {
+            padding: 20px 0;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 0 20px;
+            margin-bottom: 12px;
+        }
+
+        .nav-item {
+            padding: 8px 20px 8px 40px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: var(--primary-light);
+        }
+
+        .nav-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary);
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            background: #ffffff;
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .breadcrumbs {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--text-main);
+            font-weight: 600;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            font-weight: 600;
+            margin: 40px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-weight: 600;
+            margin: 24px 0 12px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 24px;
+            color: #334155;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #ef4444;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .highlight-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+        }
+
+        /* Ocultar seções não ativas */
+        .doc-section {
+            display: none;
+        }
+        .doc-section.active {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-window">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="logo">
+                <span style="background: var(--primary); color: white; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">V</span>
+                Vagas Docs
+            </div>
+            <div class="search-bar">
+                🔍 Buscar na documentação...
+            </div>
+            <div class="topbar-spacer"></div>
+            <a href="/" style="text-decoration: none; font-size: 0.9rem; color: var(--text-main); font-weight: 500; margin-right: 16px;">Voltar ao App</a>
+            <div class="avatar">DEV</div>
+        </header>
+
+        <!-- Main Body -->
+        <div class="main-wrapper">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-tabs">
+                    <span class="active">Documentação</span>
+                    <span>API</span>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Getting Started</div>
+                    <div class="nav-item active" onclick="switchTab('visao-geral')">Visão Geral</div>
+                    <div class="nav-item" onclick="switchTab('arquitetura')">Arquitetura</div>
+                    <div class="nav-item" onclick="switchTab('instalacao')">Instalação & Setup</div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Core Engine</div>
+                    <div class="nav-item" onclick="switchTab('scraper')">Scraper (LinkedIn)</div>
+                    <div class="nav-item" onclick="switchTab('match')">Match de Currículo (TF-IDF)</div>
+                    <div class="nav-item" onclick="switchTab('newsletter')">Newsletter System</div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <main class="content-area">
+                <div class="content-container">
+
+                    <!-- SEÇÃO: Visão Geral -->
+                    <div id="visao-geral" class="doc-section active">
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Getting Started <span>/</span> Visão Geral</div>
+                        <h1>Visão Geral do Projeto</h1>
+                        
+                        <p>Bem-vindo à documentação oficial do <b>Vagas e Oportunidades</b>. Este projeto foi concebido para atuar como um ecossistema completo e automatizado de extração, análise e notificação de vagas de emprego.</p>
+
+                        <div class="highlight-box">
+                            <p style="margin:0; color: #166534;"><b>Status:</b> Produção ativa. O sistema realiza scrapings horários e possui interface consumidora em React (Vite).</p>
+                        </div>
+
+                        <h2>Objetivos de Negócio</h2>
+                        <ul>
+                            <li>Garantir ao candidato acesso rápido a oportunidades sem depender exclusivamente das notificações falhas das redes profissionais.</li>
+                            <li>Filtrar vagas de altíssima concorrência.</li>
+                            <li>Prover uma <b>análise de aderência (Match Score)</b> usando Inteligência Artificial (NLP).</li>
+                        </ul>
+
+                        <h2>Tecnologias Principais</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Camada</th>
+                                    <th>Tecnologia</th>
+                                    <th>Propósito</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Frontend</td>
+                                    <td>React (Vite)</td>
+                                    <td>Interface de usuário responsiva e moderna (Glassmorphism).</td>
+                                </tr>
+                                <tr>
+                                    <td>Backend</td>
+                                    <td>Python (Flask)</td>
+                                    <td>API RESTful, rotinas de background e endpoints do sistema.</td>
+                                </tr>
+                                <tr>
+                                    <td>Banco de Dados</td>
+                                    <td>SQLite</td>
+                                    <td>Armazenamento leve e local (users.db, newsletter.db).</td>
+                                </tr>
+                                <tr>
+                                    <td>Automação</td>
+                                    <td>APScheduler</td>
+                                    <td>Agendamento de extrações e disparos de e-mail automatizados.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- SEÇÃO: Arquitetura -->
+                    <div id="arquitetura" class="doc-section">
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Getting Started <span>/</span> Arquitetura</div>
+                        <h1>Arquitetura do Sistema</h1>
+                        
+                        <p>O fluxo de dados da aplicação é desenhado para ser resiliente e assíncrono. O Frontend React atua apenas como consumidor dos dados que o Backend gera de forma autônoma.</p>
+
+                        <h2>Diagrama Lógico</h2>
+                        <pre>
+[LinkedIn API/Scraper] ----(Extrai a cada 1h)---> [ JSON Local (.tmp) ]
+                                                        |
+[Currículo PDF] ---(PyMuPDF / OCR)--> [TF-IDF Match] ---+---> [ Frontend React ]
+                                                        |
+[Newsletter Jobs] <-------(Cron Múltiplo)---------------+
+                        </pre>
+
+                        <h2>Estrutura de Diretórios</h2>
+                        <pre>
+/app-linkedin
+ ├── /vagas-app          (Frontend Vite/React)
+ │    ├── /src
+ │    │    ├── /components
+ │    │    └── App.jsx
+ │    └── /public
+ │
+ ├── /execution          (Backend Python)
+ │    ├── server.py             (Entrypoint Flask)
+ │    ├── linkedin_scraper.py   (Motor de Busca)
+ │    ├── ocr_mac.py            (Leitura de PDF/Imagens)
+ │    ├── database.py           (Gerenciador SQLite)
+ │    └── /.tmp                 (Vagas em JSON / CVs Salvos)
+                        </pre>
+                    </div>
+
+                    <!-- SEÇÃO: Instalação -->
+                    <div id="instalacao" class="doc-section">
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Getting Started <span>/</span> Instalação & Setup</div>
+                        <h1>Instalação & Setup Local</h1>
+                        
+                        <p>Siga os passos abaixo para rodar o projeto em sua máquina local para desenvolvimento.</p>
+
+                        <h2>1. Backend (Python)</h2>
+                        <p>Recomendamos o uso de um ambiente virtual (venv).</p>
+                        <pre>
+cd execution
+python3 -m venv venv
+source venv/bin/activate
+pip install flask pyjwt linkedin-api apscheduler pymupdf scikit-learn pdf2image pytesseract
+python server.py</pre>
+                        <p>O servidor iniciará na porta <code>5001</code>.</p>
+
+                        <h2>2. Frontend (React)</h2>
+                        <pre>
+cd vagas-app
+npm install
+npm run dev</pre>
+                        <p>O Vite subirá na porta <code>5173</code>, e os proxies no <code>vite.config.js</code> farão o roteamento das chamadas <code>/api/*</code> para a porta <code>5001</code> do Python.</p>
+                    </div>
+
+                    <!-- SEÇÃO: Scraper -->
+                    <div id="scraper" class="doc-section">
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Scraper (LinkedIn)</div>
+                        <h1>Motor de Scraper</h1>
+                        
+                        <p>O <code>linkedin_scraper.py</code> é o coração da aquisição de dados. Ele utiliza a biblioteca não-oficial <code>linkedin-api</code> para buscar oportunidades.</p>
+
+                        <h2>Estratégia de Dupla Fonte</h2>
+                        <p>O script varre duas fontes simultaneamente para cada termo-chave:</p>
+                        <ol>
+                            <li><b>Seção de Vagas:</b> Busca as oportunidades formais postadas por empresas.</li>
+                            <li><b>Feed / Timeline:</b> Busca posts de recrutadores. O frontend consolida essas buscas se o <code>titulo_vaga</code> for "Vaga via Post" garantindo o <code>termo_busca</code> correspondente.</li>
+                        </ol>
+
+                        <h2>Regras de Ordenação</h2>
+                        <p>As vagas extraídas são ordenadas pela concorrência antes de serem salvas:</p>
+                        <pre>
+vagas_encontradas.sort(key=lambda x: (
+    x["concorrencia"]["comentarios"], 
+    x["concorrencia"]["compartilhamentos"]
+))</pre>
+                        <p>Isso garante que o painel exiba primeiro oportunidades menos saturadas.</p>
+                    </div>
+
+                    <!-- SEÇÃO: Match -->
+                    <div id="match" class="doc-section">
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Match de Currículo</div>
+                        <h1>Sistema de Matching (TF-IDF)</h1>
+                        
+                        <p>Para fornecer o "Score de Afinidade" aos candidatos, implementamos uma análise vetorial via <b>Scikit-Learn</b> no arquivo <code>server.py</code> (rota <code>/api/analyze</code>).</p>
+
+                        <h2>Fluxo de Leitura</h2>
+                        <p>1. O usuário anexa um PDF.</p>
+                        <p>2. O <code>PyMuPDF (fitz)</code> tenta ler o texto puro.</p>
+                        <p>3. Se a extração resultar em menos de 50 caracteres (indicando um PDF de imagem), o sistema invoca o <code>pytesseract</code> (OCR) para forçar a extração ótica.</p>
+                        
+                        <h2>Cálculo TF-IDF</h2>
+                        <pre>
+vectorizer = TfidfVectorizer(stop_words=stopwords_pt)
+tfidf_matrix = vectorizer.fit_transform([texto_curriculo, texto_vaga])
+similaridade = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])
+score = round(similaridade[0][0] * 100)</pre>
+                        <p>Se o score for maior que 85%, o sistema o classifica na interface com cores de destaque.</p>
+                    </div>
+
+                    <!-- SEÇÃO: Newsletter -->
+                    <div id="newsletter" class="doc-section">
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Newsletter System</div>
+                        <h1>Disparo de Newsletters</h1>
+                        
+                        <p>A funcionalidade de e-mails é controlada pela tabela <code>subscribers</code> no banco de dados <code>newsletter.db</code>.</p>
+
+                        <h2>Frequências de Disparo</h2>
+                        <ul>
+                            <li><b>1x ao dia:</b> E-mail consolidado matinal.</li>
+                            <li><b>3x ao dia:</b> Manhã, Tarde e Noite.</li>
+                            <li><b>5x ao dia:</b> A cada poucas horas durante horário comercial.</li>
+                        </ul>
+
+                        <h2>Template HTML Dinâmico</h2>
+                        <p>O <code>server.py</code> lê o arquivo `vagas_extraidas.json`, cruza as "areas" que o usuário se inscreveu, renderiza uma tabela HTML responsiva e despacha via SMTP do Gmail. O link de unsubscribe utiliza um token JWT seguro.</p>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Remove active das nav-items
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            // Adiciona na clicada (baseado no event)
+            event.currentTarget.classList.add('active');
+
+            // Esconde todas as sections
+            document.querySelectorAll('.doc-section').forEach(el => el.classList.remove('active'));
+            // Mostra a selecionada
+            document.getElementById(tabId).classList.add('active');
+            
+            // Volta pro topo da area de scroll
+            document.querySelector('.content-area').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
