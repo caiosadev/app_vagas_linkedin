@@ -83,10 +83,10 @@ def main():
         
     try:
         keywords = [
-            "Webdesigner",
-            "webdesign", 
-            "Web designer", 
-            "Web design",
+            "\"Webdesigner\"",
+            "\"webdesign\"", 
+            "\"Web designer\"", 
+            "\"Web design\"",
             "Analista de suporte", 
             "Analista de Suporte (N1)",
             "Analista de Suporte N1",
