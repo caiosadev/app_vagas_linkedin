@@ -6,6 +6,7 @@ import AuthModal from './components/AuthModal';
 import DonateModal from './components/DonateModal';
 import ContactModal from './components/ContactModal';
 import NewsletterModal from './components/NewsletterModal';
+import fallbackJobs from './vagasData.json';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -230,6 +231,27 @@ function App() {
     return scoreB - scoreA;
   });
 
+  let finalJobs = filteredJobs;
+  if (finalJobs.length === 0) {
+    // Fallback: se o scraper da última hora não trouxe vagas para a categoria, exibe vagas cacheadas locais
+    finalJobs = fallbackJobs.filter(job => {
+      if (!job) return false;
+      const term = (job.termo_busca || "").toLowerCase();
+      const title = (job.titulo_vaga || "").toLowerCase();
+      
+      if (activeCategory === 'web-designer') {
+        return title.includes('design') || title.includes('ux') || title.includes('ui');
+      }
+      if (activeCategory === 'analista-suporte') {
+        return title.includes('suporte') || title.includes('desk') || title.includes('support');
+      }
+      if (activeCategory === 'analista-atendimento') {
+        return title.includes('atendimento') || title.includes('customer');
+      }
+      return false;
+    }).slice(0, 50); // Limita para não pesar a UI com o fallback inteiro
+  }
+
   const categoryLabels = {
     'web-designer': 'Web Designer',
     'analista-suporte': 'Analista de Suporte',
@@ -264,7 +286,7 @@ function App() {
           </div>
         ) : (
           <JobGrid 
-            jobs={filteredJobs} 
+            jobs={finalJobs} 
             categoryName={categoryLabels[activeCategory]} 
             newJobIds={newJobIds}
             clearNewJobs={clearNewJobs}
