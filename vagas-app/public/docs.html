@@ -502,17 +502,28 @@ score = round(similaridade[0][0] * 100)</pre>
                         <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Newsletter System</div>
                         <h1>Disparo de Newsletters</h1>
                         
-                        <p>A funcionalidade de e-mails é controlada pela tabela <code>subscribers</code> no banco de dados <code>newsletter.db</code>.</p>
+                        <p>A funcionalidade de e-mails é controlada pela tabela <code>subscribers</code> no banco de dados <code>newsletter.db</code> e roda via <b>APScheduler</b> em background.</p>
 
                         <h2>Frequências de Disparo</h2>
                         <ul>
-                            <li><b>1x ao dia:</b> E-mail consolidado matinal.</li>
-                            <li><b>3x ao dia:</b> Manhã, Tarde e Noite.</li>
-                            <li><b>5x ao dia:</b> A cada poucas horas durante horário comercial.</li>
+                            <li><b>1x ao dia:</b> E-mail consolidado matinal (09:00).</li>
+                            <li><b>3x ao dia:</b> Manhã, Tarde e Noite (09:00, 14:00, 19:00).</li>
+                            <li><b>5x ao dia:</b> Horário comercial intenso (08:00, 11:00, 14:00, 17:00, 20:00).</li>
                         </ul>
 
-                        <h2>Template HTML Dinâmico</h2>
-                        <p>O <code>server.py</code> lê o arquivo `vagas_extraidas.json`, cruza as "areas" que o usuário se inscreveu, renderiza uma tabela HTML responsiva e despacha via SMTP do Gmail. O link de unsubscribe utiliza um token JWT seguro.</p>
+                        <h2>Lógica de Caching e Disparo (Fallback)</h2>
+                        <p>Para garantir que o usuário <b>sempre</b> receba a newsletter programada, o sistema usa uma técnica de fallback:</p>
+                        <ol>
+                            <li>Tenta carregar o cache vivo <code>.tmp/vagas_extraidas.json</code> gerado pelo robô.</li>
+                            <li>Se não encontrar ou o arquivo estiver vazio, automaticamente consome o banco de dados tático embarcado no frontend (<code>vagasData.json</code>).</li>
+                        </ol>
+
+                        <h2>SMTP e Integração</h2>
+                        <p>O envio usa a biblioteca padrão <code>smtplib</code> via protocolo <code>STARTTLS (Porta 587)</code>. No ambiente de produção, é projetado para operar com contas SMTP transacionais de alta confiança (como <b>SendPulse, Brevo, ou Resend</b>), garantindo que os alertas de emprego cheguem na caixa de entrada e não caiam no Spam.</p>
+                        
+                        <div class="highlight-box">
+                            <p style="margin:0; color: #166534;"><b>Proteção JWT:</b> O link de descadastramento (Unsubscribe) inserido no rodapé do e-mail é assinado com JSON Web Tokens para evitar manipulação ou exclusão acidental por bots.</p>
+                        </div>
                     </div>
 
                 </div>

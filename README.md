@@ -11,11 +11,15 @@ Um ecossistema completo para extração automatizada, gestão e notificação de
 A plataforma foi desenhada para ser o assistente definitivo na busca por vagas. Quando o usuário acessa o sistema, ele tem à sua disposição as seguintes funcionalidades:
 
 1. **Painel de Vagas (Job Grid):** Visualizar vagas atualizadas em uma interface incrivelmente moderna (estilo Glassmorphism). As vagas trazem um resumo descritivo, quantidade de candidaturas concorrentes e a empresa contratante.
-2. **Sistema de Contas:** O usuário pode se cadastrar e fazer login de forma totalmente segura para salvar o seu progresso na nuvem.
-3. **Análise de Currículo Inteligente:** O usuário pode fazer o upload do seu currículo em PDF (ou até imagens JPG do currículo). O sistema fará a leitura e, sempre que o usuário ver as vagas, mostrará um **Score de Afinidade (%)** indicando o quão compatível o currículo dele é com aquela vaga específica.
-4. **Integração Visual com LinkedIn:** O usuário pode fornecer a URL do seu perfil para vincular à conta, e gerenciar a remoção a qualquer momento.
-5. **Assinatura de Newsletter Segmentada:** O usuário pode clicar no botão "Receber vagas por E-mail", escolher as áreas do seu interesse (ex: Web Design, Suporte e Atendimento, Vagas Gerais), e selecionar se quer receber e-mails 1x, 3x ou 5x ao dia.
-6. **Formulário de Contato e Suporte:** Canal direto com a administração do sistema, equipado com filtros anti-spam invisíveis, para relatar bugs ou enviar sugestões.
+2. **Scraper Automático de Feed e Páginas:** O motor extrai vagas nos feeds, na pesquisa de empregos e em **Company Pages** chaves (ex: *Home Office - Vagas Remotas*, *Nerdin*, etc), sendo atualizado a cada hora.
+3. **Sistema de Contas:** O usuário pode se cadastrar e fazer login de forma totalmente segura para salvar o seu progresso na nuvem.
+4. **Análise de Currículo Inteligente:** O usuário pode fazer o upload do seu currículo em PDF (ou imagem). O sistema fará a leitura e calculará via TF-IDF um **Score de Afinidade (%)** para cada vaga.
+5. **Integração Visual com LinkedIn:** O usuário pode fornecer a URL do seu perfil para vincular à conta, gerenciar e desconectar quando quiser.
+6. **Assinatura de Newsletter Segmentada e Resiliente:** 
+   - O usuário escolhe as áreas do seu interesse (Web Design, Suporte, etc) e define a periodicidade (1x, 3x ou 5x ao dia).
+   - **Sistema de Caching/Fallback:** Caso não hajam vagas novíssimas naquela hora, o script consome os caches inteligentes locais para garantir que a oportunidade perfeita chegue na hora certa.
+   - Preparado para integração imediata com ferramentas SMTP de ponta (SendPulse, Brevo, Resend) garantindo bypass de filtros Anti-Spam.
+7. **Formulário de Contato e Suporte:** Canal direto com a administração do sistema, equipado com filtros anti-spam.
 
 ### 📖 Tutorial Passo a Passo
 Preparamos um guia visual e detalhado para ajudar novos usuários a explorarem todas essas ferramentas. 
