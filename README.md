@@ -1,4 +1,4 @@
-# Oportunidades IA - Sistema de Gestão e Scraping de Vagas
+# Oportunidades - Sistema de Gestão e Scraping de Vagas
 
 Um ecossistema completo para extração automatizada, gestão e notificação de vagas de emprego voltadas para o mercado de tecnologia. A aplicação busca ativamente oportunidades, aplica filtros de concorrência e apresenta uma interface moderna para que candidatos acompanhem o mercado.
 
@@ -20,7 +20,7 @@ Um ecossistema completo para extração automatizada, gestão e notificação de
 
 * **Scraping Automático:** Robô coleta constantemente novas vagas baseadas em termos técnicos e vagas remotas de Feed/Timeline.
 * **Sistema de Newsletter (Cron):** Disparo automatizado de e-mails via SMTP com as top 5 vagas de menor concorrência, formatadas em um template HTML e filtradas pelas áreas de interesse escolhidas pelo usuário (1x, 3x ou 5x ao dia).
-* **Análise Inteligente de Currículo:** O sistema lê currículos (em PDF ou imagem) do usuário logado e cruza os dados com a lista de vagas para exibir um `Score de Afinidade` em porcentagem.
+* **Análise Inteligente de Currículo:** O sistema lê currículos (em PDF ou imagem) do usuário logado e cruza os dados com a lista de vagas para exibir um `Score de Afinidade` em porcentagem baseada em métricas e análise vetorial de texto.
 * **Módulo de Segurança:** Endpoints protegidos por **JWT Tokens**. Senhas salvas com hash seguro (`werkzeug.security`).
 * **Proteção Anti-Spam (Honeypot):** Formulários possuem campos invisíveis que barram bots de realizarem inscrições automatizadas indevidas na newsletter.
 

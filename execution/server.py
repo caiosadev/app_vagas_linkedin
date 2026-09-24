@@ -419,7 +419,7 @@ def send_newsletter(frequency_target):
             <html>
             <body style="font-family: Arial, sans-serif; color: #333; background: #f8fafc; padding: 20px;">
                 <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <h2 style="color: #0284c7; text-align: center;">Oportunidades IA</h2>
+                    <h2 style="color: #0284c7; text-align: center;">Vagas e Oportunidades</h2>
                     <p>Olá <b>{name}</b>,</p>
                     <p>Separamos as melhores oportunidades remotas nas suas áreas de interesse:</p>
             """
@@ -453,7 +453,7 @@ def send_newsletter(frequency_target):
             
             html_content += f"""
                     <p style="margin-top: 30px; font-size: 12px; color: #94a3b8; text-align: center;">
-                        Você está recebendo este e-mail porque se cadastrou no Oportunidades IA.<br>
+                        Você está recebendo este e-mail porque se cadastrou no Vagas e Oportunidades.<br>
                         Se não deseja mais receber estas vagas, <a href="{unsubscribe_link}" style="color: #64748b; text-decoration: underline;">clique aqui para descadastrar</a>.
                     </p>
                 </div>
@@ -464,8 +464,8 @@ def send_newsletter(frequency_target):
             msg = EmailMessage()
             msg.set_content("Ative o HTML para visualizar as vagas.")
             msg.add_alternative(html_content, subtype='html')
-            msg['Subject'] = 'Suas Vagas Selecionadas - Oportunidades IA'
-            msg['From'] = f"Oportunidades IA <{smtp_user}>"
+            msg['Subject'] = 'Suas Vagas Selecionadas - Vagas e Oportunidades'
+            msg['From'] = f"Vagas e Oportunidades <{smtp_user}>"
             msg['To'] = email
             
             try:
