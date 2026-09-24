@@ -403,9 +403,11 @@ def send_newsletter(frequency_target):
                 titulo = v.get('titulo_vaga', '').lower()
                 
                 area_vaga = 'Vagas Gerais'
-                if 'design' in termo or 'designer' in termo or 'design' in titulo or 'ux' in titulo or 'ui' in titulo:
+                words_titulo = set(re.findall(r'\b\w+\b', titulo))
+                
+                if 'design' in termo or 'designer' in termo or 'design' in words_titulo or 'designer' in words_titulo or 'ux' in words_titulo or 'ui' in words_titulo:
                     area_vaga = 'Web Design'
-                elif 'suporte' in termo or 'atendimento' in termo or 'support' in titulo or 'desk' in titulo:
+                elif 'suporte' in termo or 'atendimento' in termo or 'suporte' in words_titulo or 'atendimento' in words_titulo or 'support' in words_titulo or 'desk' in words_titulo:
                     area_vaga = 'Suporte e Atendimento'
                     
                 if area_vaga not in vagas_por_area:
