@@ -48,11 +48,6 @@ const JobCard = ({ job }) => {
         <div className="job-meta" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             <span className="date-badge">Nova</span>
-            {job.candidaturas && job.candidaturas !== 'Não informado' && (
-              <span className="applicants-badge">
-                👥 {job.candidaturas}
-              </span>
-            )}
           </div>
         </div>
       </div>

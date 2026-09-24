@@ -34,19 +34,30 @@ function App() {
       const response = await fetch('/api/vagas');
       if (response.ok) {
         const data = await response.json();
+        
+        // Helper function to extract number from candidaturas string
+        const parseCandidaturas = (str) => {
+          if (!str || str === 'Não informado') return 999999;
+          const num = parseInt(str.replace(/\D/g, ''), 10);
+          return isNaN(num) ? 999999 : num;
+        };
+
+        // Sort data by candidaturas ascending
+        const sortedData = data.sort((a, b) => parseCandidaturas(a.candidaturas) - parseCandidaturas(b.candidaturas));
+
         setJobs(prevJobs => {
           if (prevJobs.length > 0) {
             const prevJobLinks = new Set(prevJobs.map(j => j.link || j.titulo_vaga));
-            const newJobsList = data.filter(j => !prevJobLinks.has(j.link || j.titulo_vaga));
+            const newJobsList = sortedData.filter(j => !prevJobLinks.has(j.link || j.titulo_vaga));
             if (newJobsList.length > 0) {
               const ids = newJobsList.map(j => j.link || j.titulo_vaga);
               setNewJobIds(prev => new Set([...prev, ...ids]));
             }
           }
           
-          if (prevJobs.length === 0) return data;
+          if (prevJobs.length === 0) return sortedData;
           
-          return data.map(newJob => {
+          return sortedData.map(newJob => {
             const oldJob = prevJobs.find(pj => pj.link === newJob.link);
             if (oldJob && oldJob.match_score !== undefined) {
               return { ...newJob, match_score: oldJob.match_score };
