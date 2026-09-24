@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from linkedin_api import Linkedin
 
 # Configuração do sistema de logs automatizado em português brasileiro
+os.makedirs(".tmp", exist_ok=True)
 log_file_path = os.path.join(".tmp", "aplicacao_scraper.log")
 logging.basicConfig(
     level=logging.INFO,
