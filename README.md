@@ -31,6 +31,10 @@ A plataforma foi desenhada para ser o assistente definitivo na busca por vagas. 
 Preparamos um guia visual e detalhado para ajudar novos usuários a explorarem todas essas ferramentas. 
 [👉 Clique aqui para acessar o nosso Tutorial de Uso](https://appvagaslinkedin-six.vercel.app/tutorial.html)
 
+### 📚 Documentação do Desenvolvedor & API
+Quer entender a fundo como a arquitetura em nuvem, a comunicação de APIs e o Banco de Dados operam por baixo dos panos? 
+[👉 Clique aqui para acessar a Documentação Técnica](https://appvagaslinkedin-six.vercel.app/docs.html)
+
 ---
 
 ## ⚙️ Como toda a aplicação funciona passo a passo?
