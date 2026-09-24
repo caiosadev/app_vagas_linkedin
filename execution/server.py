@@ -368,7 +368,10 @@ def send_newsletter(frequency_target):
             
         vagas_path = os.path.join(BASE_DIR, '.tmp', 'vagas_extraidas.json')
         if not os.path.exists(vagas_path):
-            return
+            # Fallback para o cache do app
+            vagas_path = os.path.join(os.path.dirname(BASE_DIR), 'vagas-app', 'src', 'vagasData.json')
+            if not os.path.exists(vagas_path):
+                return
             
         with open(vagas_path, 'r', encoding='utf-8') as f:
             vagas = json.load(f)
@@ -469,7 +472,8 @@ def send_newsletter(frequency_target):
             msg['To'] = email
             
             try:
-                with smtplib.SMTP_SSL(smtp_host, int(smtp_port)) as server:
+                with smtplib.SMTP(smtp_host, int(smtp_port)) as server:
+                    server.starttls()
                     server.login(smtp_user, smtp_pass)
                     server.send_message(msg)
                 print(f"Newsletter enviada para {email}")
@@ -492,6 +496,8 @@ scheduler.start()
 @app.route('/api/vagas', methods=['GET'])
 def get_vagas():
     tmp_path = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
+    if not os.path.exists(tmp_path):
+        tmp_path = os.path.join(os.path.dirname(BASE_DIR), 'vagas-app', 'src', 'vagasData.json')
     try:
         with open(tmp_path, "r", encoding="utf-8") as f:
             data = json.load(f)
