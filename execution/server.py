@@ -607,11 +607,17 @@ def get_vagas():
 def get_status():
     tmp_vagas = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
     mock_vagas = os.path.join(BASE_DIR, 'vagasData.json')
+    try:
+        dir_contents = os.listdir(BASE_DIR)
+    except Exception as e:
+        dir_contents = [str(e)]
+        
     return jsonify({
         "is_running": state["is_running"],
         "last_run_time": state["last_run_time"].isoformat() if state["last_run_time"] else None,
         "debug_paths": {
             "BASE_DIR": BASE_DIR,
+            "dir_contents": dir_contents,
             "tmp_vagas": tmp_vagas,
             "tmp_vagas_exists": os.path.exists(tmp_vagas),
             "mock_vagas": mock_vagas,
