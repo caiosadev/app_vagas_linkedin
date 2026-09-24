@@ -1,6 +1,6 @@
 # Oportunidades - Sistema de Gestão e Scraping de Vagas
 
-![Painel da Aplicação](vagas-app/public/print-painel.png)
+![Painel da Aplicação](public/print-painel.png)
 
 Um ecossistema completo para extração automatizada, gestão e notificação de vagas de emprego voltadas para o mercado de tecnologia. A aplicação busca ativamente oportunidades, aplica filtros de concorrência e apresenta uma interface moderna para que candidatos acompanhem o mercado.
 
