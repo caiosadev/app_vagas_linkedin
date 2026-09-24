@@ -273,7 +273,7 @@ function App() {
         <div className="footer-links">
           <a href="#" className="footer-link donate-link" onClick={(e) => { e.preventDefault(); setIsDonateModalOpen(true); }}>Projeto Open Source, faça sua doação aqui.</a>
           <a href="#" className="footer-link" onClick={(e) => { e.preventDefault(); setIsContactModalOpen(true); }}>Contato</a>
-          <a href="#" className="footer-link">Como Usar</a>
+          <a href="/tutorial.html" target="_blank" rel="noopener noreferrer" className="footer-link">Como Usar</a>
           <a href="#" className="footer-link">Documentação</a>
         </div>
       </footer>
