@@ -9,29 +9,49 @@ const { chromium } = require('playwright');
   await page.goto('http://localhost:5173');
   await page.waitForTimeout(3000); // Wait for load
 
-  // The Auth Modal might be open by default if not logged in.
-  console.log("Tirando print do Perfil/Login...");
+  // The Auth Modal is open by default since we are not logged in.
+  // Click the 'Cadastre-se' button to show the registration form
+  console.log("Trocando para tela de cadastro...");
+  await page.click('.auth-switch button');
+  await page.waitForTimeout(500);
+
+  console.log("Tirando print do Cadastro/Perfil...");
   await page.screenshot({ path: 'public/print-perfil.png' });
 
-  // Close the Auth Modal by pressing Escape or clicking outside
-  console.log("Fechando modal de login...");
-  await page.keyboard.press('Escape');
-  await page.waitForTimeout(1000);
+  console.log("Simulando login...");
+  await page.evaluate(() => {
+    localStorage.setItem('user', JSON.stringify({ name: 'Visuals', id: 1, email: 'teste@visuals.com.br' }));
+    localStorage.setItem('token', 'fake-token-123');
+    window.location.reload();
+  });
   
-  // Just in case it didn't close, try clicking the close button if it exists
-  const closeBtn = await page.$('.modal-overlay.auth-overlay .close-btn');
-  if (closeBtn) {
-    await closeBtn.click();
-    await page.waitForTimeout(1000);
-  } else {
-    // If no close button, try clicking the overlay background to close
-    await page.mouse.click(10, 10);
-    await page.waitForTimeout(1000);
-  }
+  // Wait for the page to load after the hard reload
+  await page.waitForTimeout(3000);
 
-  // Now we should be on the main panel
+  // Now we should be on the main panel without the login modal
   console.log("Tirando print do Painel Principal...");
   await page.screenshot({ path: 'public/print-painel.png' });
+
+  // Open Profile (where user uploads CV)
+  console.log("Abrindo área de Currículo/Perfil logado...");
+  try {
+    await page.click('button.profile-action-btn', { force: true });
+    await page.waitForTimeout(1000);
+    console.log("Tirando print da área de currículo...");
+    await page.screenshot({ path: 'public/print-curriculo.png' });
+    
+    // Close it
+    const closeBtn = await page.$('.modal-overlay:not(.auth-overlay) .close-btn');
+    if (closeBtn) {
+      await closeBtn.click();
+      await page.waitForTimeout(1000);
+    } else {
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(1000);
+    }
+  } catch (err) {
+    console.log("Erro ao abrir currículo: ", err);
+  }
 
   // Open Newsletter
   console.log("Abrindo Newsletter...");
