@@ -1,7 +1,7 @@
 import sqlite3
 import os
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import psycopg
+from psycopg.rows import dict_row
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'users.db')
 NEWSLETTER_DB_PATH = os.path.join(os.path.dirname(__file__), 'newsletter.db')
@@ -10,20 +10,20 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 def get_db_connection():
     if DATABASE_URL:
-        return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+        return psycopg.connect(DATABASE_URL, row_factory=dict_row)
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
 def get_newsletter_db_connection():
     if DATABASE_URL:
-        return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+        return psycopg.connect(DATABASE_URL, row_factory=dict_row)
     conn = sqlite3.connect(NEWSLETTER_DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
 def db_execute(conn, query, params=()):
-    is_pg = hasattr(conn, 'cursor_factory')
+    is_pg = hasattr(conn, 'info') or hasattr(conn, 'pgconn') # psycopg3 connection objects have 'info'
     if is_pg:
         query = query.replace('?', '%s')
         query = query.replace('INTEGER PRIMARY KEY AUTOINCREMENT', 'SERIAL PRIMARY KEY')
