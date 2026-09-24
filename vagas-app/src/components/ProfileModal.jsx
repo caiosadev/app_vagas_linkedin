@@ -39,11 +39,25 @@ const ProfileModal = ({ isOpen, onClose, onAnalyze, token }) => {
     }
   };
 
-  const removeFile = (e) => {
+  const removeFile = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     setResumePdf(null);
     setHasResumeSaved(false); // Força ele a enviar um novo
+
+    if (token) {
+      const formData = new FormData();
+      formData.append('removeResume', 'true');
+      try {
+        await fetch('/api/user/profile', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        });
+      } catch (err) {
+        console.error('Erro ao remover currículo do servidor:', err);
+      }
+    }
   };
 
   const saveProfile = async () => {
