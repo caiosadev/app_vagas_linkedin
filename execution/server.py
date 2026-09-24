@@ -243,7 +243,9 @@ def analyze_profile():
     # 2. Carregar vagas atuais
     tmp_path = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
     if not os.path.exists(tmp_path):
-        return jsonify({"message": "O sistema está processando as vagas no momento. Por favor, aguarde alguns minutos e tente analisar novamente."}), 400
+        tmp_path = os.path.join(os.path.dirname(BASE_DIR), 'src', 'vagasData.json')
+        if not os.path.exists(tmp_path):
+            return jsonify({"message": "O sistema está processando as vagas no momento. Por favor, aguarde alguns minutos e tente analisar novamente."}), 400
 
     try:
         with open(tmp_path, "r", encoding="utf-8") as f:
