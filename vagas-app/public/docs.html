@@ -304,8 +304,9 @@
                 <span style="background: var(--primary); color: white; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">V</span>
                 Vagas Docs
             </div>
-            <div class="search-bar">
-                🔍 Buscar na documentação...
+            <div class="search-bar" style="padding: 4px 12px;">
+                <span style="margin-right: 8px;">🔍</span>
+                <input id="searchInput" type="text" placeholder="Buscar na documentação..." style="border:none; background:transparent; outline:none; width:100%; color: var(--text-main); font-size: 0.95rem; font-family: inherit;">
             </div>
             <div class="topbar-spacer"></div>
             <a href="/" style="text-decoration: none; font-size: 0.9rem; color: var(--text-main); font-weight: 500; margin-right: 16px;">Voltar ao App</a>
@@ -521,10 +522,18 @@ score = round(similaridade[0][0] * 100)</pre>
 
     <script>
         function switchTab(tabId) {
+            // Limpa a busca ao clicar no menu
+            const searchInput = document.getElementById('searchInput');
+            if(searchInput && searchInput.value.trim() !== '') {
+                searchInput.value = '';
+            }
+
             // Remove active das nav-items
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             // Adiciona na clicada (baseado no event)
-            event.currentTarget.classList.add('active');
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
 
             // Esconde todas as sections
             document.querySelectorAll('.doc-section').forEach(el => el.classList.remove('active'));
@@ -534,6 +543,36 @@ score = round(similaridade[0][0] * 100)</pre>
             // Volta pro topo da area de scroll
             document.querySelector('.content-area').scrollTop = 0;
         }
+
+        // Lógica de Busca Global
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase().trim();
+            const sections = document.querySelectorAll('.doc-section');
+            
+            if (term === '') {
+                // Restaura a primeira aba se a busca ficar vazia
+                const firstTab = document.querySelector('.nav-item');
+                if (firstTab) firstTab.click();
+                return;
+            }
+
+            // Desmarca menu lateral visualmente pois estamos vendo "Tudo"
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+            let found = false;
+            sections.forEach(section => {
+                const text = section.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    section.classList.add('active');
+                    found = true;
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+            
+            // Volta para o topo para ver os resultados
+            document.querySelector('.content-area').scrollTop = 0;
+        });
     </script>
 </body>
 </html>
