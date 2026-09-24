@@ -73,18 +73,20 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #334155;
   cursor: pointer;
   font-weight: 500;
-  padding: 4px 0;
+  padding: 8px 0;
+  line-height: 1;
 }
 
 .checkbox-label input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   accent-color: var(--primary-color);
-  margin-right: 8px;
-  margin-top: 0;
+  margin: 0;
+  position: relative;
+  top: -1px;
 }
