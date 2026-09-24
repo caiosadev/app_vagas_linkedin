@@ -114,7 +114,7 @@ Este é um projeto **100% Open Source** e gratuito! Se esta aplicação ajudou v
 
 Sua contribuição é o maior incentivo para continuarmos dedicando tempo ao desenvolvimento de novas funcionalidades, melhorias na IA e manutenção do código.
 
-🔗 **[Clique aqui para abrir a página de doação no App](/#apoie)** *(Ao hospedar, garanta que este link aponta para o caminho raiz da sua aplicação)*
+🔗 **[Clique aqui para abrir a página de doação no App](https://appvagaslinkedin-six.vercel.app/#apoie)**
 
 **Ou faça a doação direta via Chave PIX:**
 `1ef67cfd-6d20-41aa-960a-37af9bc06a19`
