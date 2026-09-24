@@ -7,7 +7,7 @@ const JobGrid = ({ jobs, categoryName, newJobIds, clearNewJobs, onOpenNewsletter
 
   return (
     <main className="main-content">
-      <header className="main-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <header className="main-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h2>Vagas para <span className="highlight">{categoryName}</span> - 100% Remoto</h2>
           <p>
