@@ -19,7 +19,7 @@ import pytesseract
 from pdf2image import convert_from_bytes, convert_from_path
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from database import get_db_connection, get_newsletter_db_connection
+from database import get_db_connection, get_newsletter_db_connection, db_execute
 import sqlite3
 import jwt
 from functools import wraps
@@ -60,7 +60,7 @@ def register():
     hashed_password = generate_password_hash(password)
     conn = get_db_connection()
     try:
-        conn.execute('INSERT INTO users (name, email, login, password_hash) VALUES (?, ?, ?, ?)',
+        db_execute(conn, 'INSERT INTO users (name, email, login, password_hash) VALUES (?, ?, ?, ?)',
                      (name, email, login, hashed_password))
         conn.commit()
     except sqlite3.IntegrityError:
@@ -77,7 +77,7 @@ def login():
     password = data.get('password')
     
     conn = get_db_connection()
-    user = conn.execute('SELECT * FROM users WHERE login = ?', (login_val,)).fetchone()
+    user = db_execute(conn, 'SELECT * FROM users WHERE login = ?', (login_val,)).fetchone()
     conn.close()
     
     if user and check_password_hash(user['password_hash'], password):
@@ -199,7 +199,7 @@ def analyze_profile():
     elif current_user_id:
         # Se não enviou agora, tentar usar o PDF salvo do banco
         conn = get_db_connection()
-        user = conn.execute('SELECT resume_path FROM users WHERE id = ?', (current_user_id,)).fetchone()
+        user = db_execute(conn, 'SELECT resume_path FROM users WHERE id = ?', (current_user_id,)).fetchone()
         conn.close()
         if user and user['resume_path'] and os.path.exists(user['resume_path']):
             try:
@@ -224,7 +224,7 @@ def analyze_profile():
 
     if not linkedin_url and current_user_id:
         conn = get_db_connection()
-        user_record = conn.execute('SELECT linkedin_url FROM users WHERE id = ?', (current_user_id,)).fetchone()
+        user_record = db_execute(conn, 'SELECT linkedin_url FROM users WHERE id = ?', (current_user_id,)).fetchone()
         conn.close()
         if user_record and user_record['linkedin_url']:
             linkedin_url = user_record['linkedin_url']
@@ -283,7 +283,7 @@ def analyze_profile():
 def user_profile(current_user_id):
     conn = get_db_connection()
     if request.method == 'GET':
-        user = conn.execute('SELECT name, login, linkedin_url, resume_path FROM users WHERE id = ?', (current_user_id,)).fetchone()
+        user = db_execute(conn, 'SELECT name, login, linkedin_url, resume_path FROM users WHERE id = ?', (current_user_id,)).fetchone()
         conn.close()
         return jsonify({
             'name': user['name'],
@@ -324,7 +324,7 @@ def user_profile(current_user_id):
         if updates:
             query = f"UPDATE users SET {', '.join(updates)} WHERE id = ?"
             params.append(current_user_id)
-            conn.execute(query, params)
+            db_execute(conn, query, params)
             conn.commit()
             
         conn.close()
@@ -360,7 +360,7 @@ def send_newsletter(frequency_target):
     try:
         print(f"Enviando newsletter para frequência {frequency_target}...")
         conn = get_newsletter_db_connection()
-        subscribers = conn.execute("SELECT name, email, areas FROM subscribers WHERE frequency = ? AND is_active = 1", (frequency_target,)).fetchall()
+        subscribers = db_execute(conn, "SELECT name, email, areas FROM subscribers WHERE frequency = ? AND is_active = 1", (frequency_target,)).fetchall()
         conn.close()
         
         if not subscribers:
@@ -662,12 +662,11 @@ def newsletter_subscribe():
     try:
         conn = get_newsletter_db_connection()
         # Verifica se já existe
-        cursor = conn.cursor()
-        cursor.execute("SELECT id FROM subscribers WHERE email = ?", (email,))
-        if cursor.fetchone():
-            cursor.execute("UPDATE subscribers SET name = ?, frequency = ?, areas = ?, is_active = 1 WHERE email = ?", (name, frequency, areas_str, email))
+        res = db_execute(conn, "SELECT id FROM subscribers WHERE email = ?", (email,)).fetchone()
+        if res:
+            db_execute(conn, "UPDATE subscribers SET name = ?, frequency = ?, areas = ?, is_active = 1 WHERE email = ?", (name, frequency, areas_str, email))
         else:
-            cursor.execute("INSERT INTO subscribers (name, email, frequency, areas, is_active) VALUES (?, ?, ?, ?, 1)", (name, email, frequency, areas_str))
+            db_execute(conn, "INSERT INTO subscribers (name, email, frequency, areas, is_active) VALUES (?, ?, ?, ?, 1)", (name, email, frequency, areas_str))
         conn.commit()
         conn.close()
         return jsonify({"success": True})
@@ -688,7 +687,7 @@ def newsletter_unsubscribe():
         
         if email and data.get('action') == 'unsubscribe':
             conn = get_newsletter_db_connection()
-            conn.execute("UPDATE subscribers SET is_active = 0 WHERE email = ?", (email,))
+            db_execute(conn, "UPDATE subscribers SET is_active = 0 WHERE email = ?", (email,))
             conn.commit()
             conn.close()
             
@@ -786,7 +785,7 @@ def admin_subscribers():
         return require_auth()
     
     conn = get_newsletter_db_connection()
-    subscribers = conn.execute("SELECT * FROM subscribers ORDER BY created_at DESC").fetchall()
+    subscribers = db_execute(conn, "SELECT * FROM subscribers ORDER BY created_at DESC").fetchall()
     conn.close()
     
     rows = ""
@@ -827,7 +826,7 @@ def admin_subscribers_export():
         return require_auth()
     
     conn = get_newsletter_db_connection()
-    subscribers = conn.execute("SELECT * FROM subscribers ORDER BY created_at DESC").fetchall()
+    subscribers = db_execute(conn, "SELECT * FROM subscribers ORDER BY created_at DESC").fetchall()
     conn.close()
     
     import csv
