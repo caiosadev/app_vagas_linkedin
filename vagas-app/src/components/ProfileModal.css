@@ -122,6 +122,10 @@
   line-height: 1;
 }
 
+.file-label > span:not(.icon) {
+  margin-top: 5px;
+}
+
 .file-selected-state {
   display: flex;
   align-items: center;
