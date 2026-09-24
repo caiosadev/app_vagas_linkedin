@@ -240,6 +240,9 @@ def analyze_profile():
 
     # 2. Carregar vagas atuais
     tmp_path = os.path.join(BASE_DIR, ".tmp", "vagas_extraidas.json")
+    if not os.path.exists(tmp_path):
+        return jsonify({"message": "O sistema está processando as vagas no momento. Por favor, aguarde alguns minutos e tente analisar novamente."}), 400
+
     try:
         with open(tmp_path, "r", encoding="utf-8") as f:
             vagas = json.load(f)
@@ -354,7 +357,9 @@ def execute_scraper():
 
 # Agendador Automático: A cada 1 hora
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=execute_scraper, trigger="interval", hours=1)
+from datetime import datetime
+
+scheduler.add_job(func=execute_scraper, trigger="interval", hours=1, next_run_time=datetime.now())
 
 def send_newsletter(frequency_target):
     try:
