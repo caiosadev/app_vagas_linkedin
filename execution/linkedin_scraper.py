@@ -166,6 +166,11 @@ def main():
                             
                         empresa = (card.get("primaryDescription") or {}).get("text", "Não informada")
                         
+                        # Ignorar spam e vagas sem empresa que poluem a tela e não tem logo
+                        emp_lower = empresa.lower()
+                        if "jobbol" in emp_lower or "não informada" in emp_lower or "não informado" in emp_lower or "página:" in emp_lower or "vagas remotas" in emp_lower or "nerdin" in emp_lower:
+                            continue
+                            
                         logo_urn = ""
                         try:
                             logo_urn = card["logo"]["attributes"][0]["detailData"]["*companyLogo"]

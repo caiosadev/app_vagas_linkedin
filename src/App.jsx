@@ -240,13 +240,29 @@ function App() {
       const title = (job.titulo_vaga || "").toLowerCase();
       
       if (activeCategory === 'web-designer') {
-        return title.includes('design') || title.includes('ux') || title.includes('ui');
+        return title.includes('web design') || 
+               title.includes('webdesign') || 
+               title.includes('designer web') ||
+               (title.includes('vaga via post') && term.includes('web designer'));
       }
       if (activeCategory === 'analista-suporte') {
-        return title.includes('suporte') || title.includes('desk') || title.includes('support');
+        return title.includes('suporte') || 
+               title.includes('help desk') || 
+               title.includes('helpdesk') || 
+               title.includes('service desk') ||
+               title.includes('technical support') ||
+               title.includes('tech support') ||
+               (title.includes('vaga via post') && term.includes('suporte'));
       }
       if (activeCategory === 'analista-atendimento') {
-        return title.includes('atendimento') || title.includes('customer');
+        return title.includes('atendimento') || 
+               title.includes('customer service') || 
+               title.includes('customer success') || 
+               title.includes('customer experience') ||
+               title.includes('sucesso do cliente') ||
+               title.includes('experiência do cliente') ||
+               title.includes('relacionamento') ||
+               (title.includes('vaga via post') && term.includes('atendimento'));
       }
       return false;
     }).slice(0, 50); // Limita para não pesar a UI com o fallback inteiro

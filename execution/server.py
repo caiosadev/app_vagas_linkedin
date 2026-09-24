@@ -401,7 +401,6 @@ def send_newsletter(frequency_target):
             for v in vagas:
                 termo = v.get('termo_busca', '').lower()
                 titulo = v.get('titulo_vaga', '').lower()
-                area_vaga = 'Vagas Gerais'
                 
                 # Regra exata do Web Designer
                 is_web_design = ('web design' in titulo or 
@@ -409,7 +408,7 @@ def send_newsletter(frequency_target):
                                  'designer web' in titulo or 
                                  ('vaga via post' in titulo and 'web designer' in termo))
                 
-                # Regras de Suporte e Atendimento (No app são 2 abas separadas, na newsletter é 1 categoria)
+                # Regras de Suporte e Atendimento separadas como no App
                 is_suporte = ('suporte' in titulo or 
                               'help desk' in titulo or 
                               'helpdesk' in titulo or 
@@ -427,14 +426,18 @@ def send_newsletter(frequency_target):
                                   'relacionamento' in titulo or
                                   ('vaga via post' in titulo and 'atendimento' in termo))
 
+                categorias_da_vaga = []
                 if is_web_design:
-                    area_vaga = 'Web Design'
-                elif is_suporte or is_atendimento:
-                    area_vaga = 'Suporte e Atendimento'
+                    categorias_da_vaga.append('Web Designer')
+                if is_suporte:
+                    categorias_da_vaga.append('Analista de Suporte')
+                if is_atendimento:
+                    categorias_da_vaga.append('Analista de Atendimento')
                     
-                if area_vaga not in vagas_por_area:
-                    vagas_por_area[area_vaga] = []
-                vagas_por_area[area_vaga].append(v)
+                for c in categorias_da_vaga:
+                    if c not in vagas_por_area:
+                        vagas_por_area[c] = []
+                    vagas_por_area[c].append(v)
             
             # Filtro das vagas pelas áreas escolhidas: as 2 últimas de cada área
             vagas_filtradas = []
@@ -478,30 +481,43 @@ def send_newsletter(frequency_target):
                 """
                 vagas_da_area = [v for v in vagas_filtradas if v['categoria_area'] == area]
                 for v in vagas_da_area:
-                    desc = str(v.get('descricao_resumida', ''))[:150]
-                    local = v.get('localidade', 'Não informado')
+                    empresa = v.get('nome_empresa', 'Empresa Confidencial')
+                    primeira_letra = empresa[0].upper() if empresa else 'C'
                     html_content += f"""
-                        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-                            <h3 style="margin: 0 0 10px 0; color: #0f172a; font-size: 18px; font-weight: 700;">{v.get('titulo_vaga')}</h3>
+                        <div style="background: #ffffff; border: 1px solid #f1f5f9; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); position: relative;">
                             
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 15px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 20px;">
                                 <tr>
                                     <td align="left">
-                                        <span style="display: inline-block; background: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 8px;">🏢 {v.get('nome_empresa')}</span>
-                                        <span style="display: inline-block; background: #f0f9ff; color: #0284c7; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">📍 {local}</span>
+                                        <div style="width: 48px; height: 48px; background-color: #f8fafc; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: #0f172a;">
+                                            {primeira_letra}<span style="color: #06b6d4;">.</span>
+                                        </div>
+                                    </td>
+                                    <td align="right" valign="top">
+                                        <span style="display: inline-block; background-color: #38bdf8; color: #ffffff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;">Nova</span>
                                     </td>
                                 </tr>
                             </table>
                             
-                            <p style="margin: 0 0 20px 0; color: #475569; font-size: 14px; line-height: 1.5;">{desc}...</p>
+                            <h3 style="margin: 0 0 8px 0; color: #0f172a; font-size: 20px; font-weight: 700; line-height: 1.3;">{v.get('titulo_vaga')}</h3>
+                            <p style="margin: 0 0 30px 0; color: #0284c7; font-size: 15px; font-weight: 500;">{empresa}</p>
                             
                             <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                 <tr>
                                     <td align="left" valign="middle">
-                                        <span style="color: #64748b; font-size: 13px;">👥 {v.get('candidaturas')} candidaturas</span>
+                                        <span style="color: #0f172a; font-size: 14px; font-weight: 600;">💰 Salário não informado</span>
                                     </td>
                                     <td align="right" valign="middle">
-                                        <a href="{v.get('link')}" style="display: inline-block; background-color: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px;">Acessar Vaga</a>
+                                        <table cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="padding-right: 12px;">
+                                                    <span style="display: inline-block; background-color: #fef3c7; color: #92400e; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 700;">Vaga: 🇧🇷</span>
+                                                </td>
+                                                <td>
+                                                    <a href="{v.get('link')}" style="display: inline-block; background-color: #0284c7; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 24px; font-weight: 600; font-size: 14px;">Candidatar-se</a>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                             </table>

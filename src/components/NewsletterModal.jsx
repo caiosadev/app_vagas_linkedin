@@ -142,16 +142,16 @@ const NewsletterModal = ({ isOpen, onClose }) => {
               <label style={{ display: 'block', marginBottom: '10px' }}>Áreas de Interesse (Selecione 1 ou mais)</label>
               <div className="checkboxes-container">
                 <label className="checkbox-label">
-                  <input type="checkbox" value="Web Design" checked={selectedAreas.includes("Web Design")} onChange={handleAreaChange} />
-                  <span>Web Design</span>
+                  <input type="checkbox" value="Web Designer" checked={selectedAreas.includes("Web Designer")} onChange={handleAreaChange} />
+                  <span>Web Designer</span>
                 </label>
                 <label className="checkbox-label">
-                  <input type="checkbox" value="Suporte e Atendimento" checked={selectedAreas.includes("Suporte e Atendimento")} onChange={handleAreaChange} />
-                  <span>Suporte e Atendimento</span>
+                  <input type="checkbox" value="Analista de Suporte" checked={selectedAreas.includes("Analista de Suporte")} onChange={handleAreaChange} />
+                  <span>Analista de Suporte</span>
                 </label>
                 <label className="checkbox-label">
-                  <input type="checkbox" value="Vagas Gerais" checked={selectedAreas.includes("Vagas Gerais")} onChange={handleAreaChange} />
-                  <span>Vagas Gerais / Remoto (Feed)</span>
+                  <input type="checkbox" value="Analista de Atendimento" checked={selectedAreas.includes("Analista de Atendimento")} onChange={handleAreaChange} />
+                  <span>Analista de Atendimento</span>
                 </label>
               </div>
             </div>
