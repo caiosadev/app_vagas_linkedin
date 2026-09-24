@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentação do Desenvolvedor - Vagas App</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,7 +14,8 @@
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --primary: #0284c7; /* Azul da aplicação */
+            --primary: #0284c7;
+            /* Azul da aplicação */
             --primary-light: #f0f9ff;
             --sidebar-width: 260px;
         }
@@ -25,7 +28,6 @@
         }
 
         body {
-            /* Background inspirador como no print */
             background: url('https://images.unsplash.com/photo-1506744626753-1fa44df31c7f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
             background-size: cover;
             display: flex;
@@ -77,7 +79,9 @@
             width: 250px;
         }
 
-        .topbar-spacer { flex: 1; }
+        .topbar-spacer {
+            flex: 1;
+        }
 
         .avatar {
             width: 32px;
@@ -122,6 +126,7 @@
             color: var(--text-muted);
             cursor: pointer;
         }
+
         .sidebar-tabs span.active {
             color: var(--primary);
             border-bottom: 2px solid var(--primary);
@@ -226,7 +231,8 @@
             margin-bottom: 16px;
         }
 
-        ul, ol {
+        ul,
+        ol {
             margin-bottom: 20px;
             padding-left: 24px;
             color: #334155;
@@ -263,7 +269,8 @@
             margin-bottom: 24px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px 16px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
@@ -289,27 +296,32 @@
         .doc-section {
             display: none;
         }
+
         .doc-section.active {
             display: block;
         }
-
     </style>
 </head>
+
 <body>
 
     <div class="app-window">
         <!-- Topbar -->
         <header class="topbar">
             <div class="logo">
-                <span style="background: var(--primary); color: white; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">V</span>
+                <span
+                    style="background: var(--primary); color: white; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">V</span>
                 Vagas Docs
             </div>
             <div class="search-bar" style="padding: 4px 12px;">
                 <span style="margin-right: 8px;">🔍</span>
-                <input id="searchInput" type="text" placeholder="Buscar na documentação..." style="border:none; background:transparent; outline:none; width:100%; color: var(--text-main); font-size: 0.95rem; font-family: inherit;">
+                <input id="searchInput" type="text" placeholder="Buscar na documentação..."
+                    style="border:none; background:transparent; outline:none; width:100%; color: var(--text-main); font-size: 0.95rem; font-family: inherit;">
             </div>
             <div class="topbar-spacer"></div>
-            <a href="/" style="text-decoration: none; font-size: 0.9rem; color: var(--text-main); font-weight: 500; margin-right: 16px;">Voltar ao App</a>
+            <a href="/"
+                style="text-decoration: none; font-size: 0.9rem; color: var(--text-main); font-weight: 500; margin-right: 16px;">Voltar
+                ao App</a>
             <div class="avatar">DEV</div>
         </header>
 
@@ -318,22 +330,36 @@
             <!-- Sidebar -->
             <aside class="sidebar">
                 <div class="sidebar-tabs">
-                    <span class="active">Documentação</span>
-                    <span>API</span>
+                    <span id="tab-docs" class="active" onclick="toggleMainTab('docs')">Documentação</span>
+                    <span id="tab-api" onclick="toggleMainTab('api')">API</span>
                 </div>
 
-                <div class="sidebar-section">
-                    <div class="sidebar-title">Getting Started</div>
-                    <div class="nav-item active" onclick="switchTab('visao-geral')">Visão Geral</div>
-                    <div class="nav-item" onclick="switchTab('arquitetura')">Arquitetura</div>
-                    <div class="nav-item" onclick="switchTab('instalacao')">Instalação & Setup</div>
+                <!-- Secoes da Documentacao (Exibidas quando Docs esta ativa) -->
+                <div id="nav-docs">
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Getting Started</div>
+                        <div class="nav-item active" onclick="switchTab('visao-geral')">Visão Geral</div>
+                        <div class="nav-item" onclick="switchTab('arquitetura')">Arquitetura</div>
+                        <div class="nav-item" onclick="switchTab('instalacao')">Instalação & Setup</div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Core Engine</div>
+                        <div class="nav-item" onclick="switchTab('scraper')">Scraper (LinkedIn)</div>
+                        <div class="nav-item" onclick="switchTab('match')">Match de Currículo (TF-IDF)</div>
+                        <div class="nav-item" onclick="switchTab('newsletter')">Newsletter System</div>
+                    </div>
                 </div>
 
-                <div class="sidebar-section">
-                    <div class="sidebar-title">Core Engine</div>
-                    <div class="nav-item" onclick="switchTab('scraper')">Scraper (LinkedIn)</div>
-                    <div class="nav-item" onclick="switchTab('match')">Match de Currículo (TF-IDF)</div>
-                    <div class="nav-item" onclick="switchTab('newsletter')">Newsletter System</div>
+                <!-- Secoes da API (Exibidas quando API esta ativa) -->
+                <div id="nav-api" style="display: none;">
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Endpoints (Backend Render)</div>
+                        <div class="nav-item" onclick="switchTab('api-vagas')">Vagas e Motor</div>
+                        <div class="nav-item" onclick="switchTab('api-auth')">Autenticação</div>
+                        <div class="nav-item" onclick="switchTab('api-newsletter')">Newsletter</div>
+                        <div class="nav-item" onclick="switchTab('api-admin')">Admin (Supabase)</div>
+                    </div>
                 </div>
             </aside>
 
@@ -345,18 +371,23 @@
                     <div id="visao-geral" class="doc-section active">
                         <div class="breadcrumbs">📄 Docs <span>/</span> Getting Started <span>/</span> Visão Geral</div>
                         <h1>Visão Geral do Projeto</h1>
-                        
-                        <p>Bem-vindo à documentação oficial do <b>Vagas e Oportunidades</b>. Este projeto foi concebido para atuar como um ecossistema completo e automatizado de extração, análise e notificação de vagas de emprego.</p>
+
+                        <p>Bem-vindo à documentação oficial do <b>Vagas e Oportunidades</b>. Este projeto foi concebido
+                            para atuar como um ecossistema completo e automatizado de extração, análise e notificação de
+                            vagas de emprego.</p>
 
                         <div class="highlight-box">
-                            <p style="margin:0; color: #166534;"><b>Status:</b> Produção ativa. O sistema realiza scrapings horários e possui interface consumidora em React (Vite).</p>
+                            <p style="margin:0; color: #166534;"><b>Status:</b> Produção ativa. O sistema realiza
+                                scrapings horários e possui interface consumidora em React (Vite).</p>
                         </div>
 
                         <h2>Objetivos de Negócio</h2>
                         <ul>
-                            <li>Garantir ao candidato acesso rápido a oportunidades sem depender exclusivamente das notificações falhas das redes profissionais.</li>
+                            <li>Garantir ao candidato acesso rápido a oportunidades sem depender exclusivamente das
+                                notificações falhas das redes profissionais.</li>
                             <li>Filtrar vagas de altíssima concorrência.</li>
-                            <li>Prover uma <b>análise de aderência (Match Score)</b> usando Inteligência Artificial (NLP).</li>
+                            <li>Prover uma <b>análise de aderência (Match Score)</b> usando Inteligência Artificial
+                                (NLP).</li>
                         </ul>
 
                         <h2>Tecnologias Principais</h2>
@@ -371,18 +402,21 @@
                             <tbody>
                                 <tr>
                                     <td>Frontend</td>
-                                    <td>React (Vite)</td>
-                                    <td>Interface de usuário responsiva e moderna (Glassmorphism).</td>
+                                    <td>React (Vite) na Vercel</td>
+                                    <td>Interface de usuário responsiva e moderna, hospedada gratuitamente na Vercel.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Backend</td>
-                                    <td>Python (Flask)</td>
-                                    <td>API RESTful, rotinas de background e endpoints do sistema.</td>
+                                    <td>Python (Flask) no Render</td>
+                                    <td>API RESTful, motor TF-IDF e rotinas de scraper rodando continuamente em nuvem.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Banco de Dados</td>
-                                    <td>SQLite</td>
-                                    <td>Armazenamento leve e local (users.db, newsletter.db).</td>
+                                    <td>PostgreSQL (Supabase)</td>
+                                    <td>Banco de dados escalável e persistente na nuvem para garantir a integridade
+                                        total dos assinantes e usuários. (Fallback local via SQLite)</td>
                                 </tr>
                                 <tr>
                                     <td>Automação</td>
@@ -397,8 +431,9 @@
                     <div id="arquitetura" class="doc-section">
                         <div class="breadcrumbs">📄 Docs <span>/</span> Getting Started <span>/</span> Arquitetura</div>
                         <h1>Arquitetura do Sistema</h1>
-                        
-                        <p>O fluxo de dados da aplicação é desenhado para ser resiliente e assíncrono. O Frontend React atua apenas como consumidor dos dados que o Backend gera de forma autônoma.</p>
+
+                        <p>O fluxo de dados da aplicação é desenhado para ser resiliente e assíncrono. O Frontend React
+                            atua apenas como consumidor dos dados que o Backend gera de forma autônoma.</p>
 
                         <h2>Diagrama Lógico</h2>
                         <pre>
@@ -429,9 +464,10 @@
 
                     <!-- SEÇÃO: Instalação -->
                     <div id="instalacao" class="doc-section">
-                        <div class="breadcrumbs">📄 Docs <span>/</span> Getting Started <span>/</span> Instalação & Setup</div>
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Getting Started <span>/</span> Instalação &
+                            Setup</div>
                         <h1>Instalação & Setup Local</h1>
-                        
+
                         <p>Siga os passos abaixo para rodar o projeto em sua máquina local para desenvolvimento.</p>
 
                         <h2>1. Backend (Python)</h2>
@@ -448,21 +484,26 @@ python server.py</pre>
                         <pre>
 npm install
 npm run dev</pre>
-                        <p>O Vite subirá na porta <code>5173</code>, e os proxies no <code>vite.config.js</code> farão o roteamento das chamadas <code>/api/*</code> para a porta <code>5001</code> do Python.</p>
+                        <p>O Vite subirá na porta <code>5173</code>, e os proxies no <code>vite.config.js</code> farão o
+                            roteamento das chamadas <code>/api/*</code> para a porta <code>5001</code> do Python.</p>
                     </div>
 
                     <!-- SEÇÃO: Scraper -->
                     <div id="scraper" class="doc-section">
-                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Scraper (LinkedIn)</div>
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Scraper (LinkedIn)
+                        </div>
                         <h1>Motor de Scraper</h1>
-                        
-                        <p>O <code>linkedin_scraper.py</code> é o coração da aquisição de dados. Ele utiliza a biblioteca não-oficial <code>linkedin-api</code> para buscar oportunidades.</p>
+
+                        <p>O <code>linkedin_scraper.py</code> é o coração da aquisição de dados. Ele utiliza a
+                            biblioteca não-oficial <code>linkedin-api</code> para buscar oportunidades.</p>
 
                         <h2>Estratégia de Dupla Fonte</h2>
                         <p>O script varre duas fontes simultaneamente para cada termo-chave:</p>
                         <ol>
                             <li><b>Seção de Vagas:</b> Busca as oportunidades formais postadas por empresas.</li>
-                            <li><b>Feed / Timeline:</b> Busca posts de recrutadores. O frontend consolida essas buscas se o <code>titulo_vaga</code> for "Vaga via Post" garantindo o <code>termo_busca</code> correspondente.</li>
+                            <li><b>Feed / Timeline:</b> Busca posts de recrutadores. O frontend consolida essas buscas
+                                se o <code>titulo_vaga</code> for "Vaga via Post" garantindo o <code>termo_busca</code>
+                                correspondente.</li>
                         </ol>
 
                         <h2>Regras de Ordenação</h2>
@@ -477,16 +518,19 @@ vagas_encontradas.sort(key=lambda x: (
 
                     <!-- SEÇÃO: Match -->
                     <div id="match" class="doc-section">
-                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Match de Currículo</div>
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Match de Currículo
+                        </div>
                         <h1>Sistema de Matching (TF-IDF)</h1>
-                        
-                        <p>Para fornecer o "Score de Afinidade" aos candidatos, implementamos uma análise vetorial via <b>Scikit-Learn</b> no arquivo <code>server.py</code> (rota <code>/api/analyze</code>).</p>
+
+                        <p>Para fornecer o "Score de Afinidade" aos candidatos, implementamos uma análise vetorial via
+                            <b>Scikit-Learn</b> no arquivo <code>server.py</code> (rota <code>/api/analyze</code>).</p>
 
                         <h2>Fluxo de Leitura</h2>
                         <p>1. O usuário anexa um PDF.</p>
                         <p>2. O <code>PyMuPDF (fitz)</code> tenta ler o texto puro.</p>
-                        <p>3. Se a extração resultar em menos de 50 caracteres (indicando um PDF de imagem), o sistema invoca o <code>pytesseract</code> (OCR) para forçar a extração ótica.</p>
-                        
+                        <p>3. Se a extração resultar em menos de 50 caracteres (indicando um PDF de imagem), o sistema
+                            invoca o <code>pytesseract</code> (OCR) para forçar a extração ótica.</p>
+
                         <h2>Cálculo TF-IDF</h2>
                         <pre>
 vectorizer = TfidfVectorizer(stop_words=stopwords_pt)
@@ -498,10 +542,12 @@ score = round(similaridade[0][0] * 100)</pre>
 
                     <!-- SEÇÃO: Newsletter -->
                     <div id="newsletter" class="doc-section">
-                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Newsletter System</div>
+                        <div class="breadcrumbs">📄 Docs <span>/</span> Core Engine <span>/</span> Newsletter System
+                        </div>
                         <h1>Disparo de Newsletters</h1>
-                        
-                        <p>A funcionalidade de e-mails é controlada pela tabela <code>subscribers</code> no banco de dados <code>newsletter.db</code> e roda via <b>APScheduler</b> em background.</p>
+
+                        <p>A funcionalidade de e-mails é controlada pela tabela <code>subscribers</code> no banco de
+                            dados <code>newsletter.db</code> e roda via <b>APScheduler</b> em background.</p>
 
                         <h2>Frequências de Disparo</h2>
                         <ul>
@@ -511,26 +557,95 @@ score = round(similaridade[0][0] * 100)</pre>
                         </ul>
 
                         <h2>Lógica de Caching e Disparo (Fallback)</h2>
-                        <p>Para garantir que o usuário <b>sempre</b> receba a newsletter programada, o sistema usa uma técnica de fallback:</p>
+                        <p>Para garantir que o usuário <b>sempre</b> receba a newsletter programada, o sistema usa uma
+                            técnica de fallback:</p>
                         <ol>
-                            <li>Tenta carregar o cache vivo <code>.tmp/vagas_extraidas.json</code> gerado pelo robô.</li>
-                            <li>Se não encontrar ou o arquivo estiver vazio, automaticamente consome o banco de dados tático embarcado no frontend (<code>vagasData.json</code>).</li>
+                            <li>Tenta carregar o cache vivo <code>.tmp/vagas_extraidas.json</code> gerado pelo robô.
+                            </li>
+                            <li>Se não encontrar ou o arquivo estiver vazio, automaticamente consome o banco de dados
+                                tático embarcado no frontend (<code>vagasData.json</code>).</li>
                         </ol>
 
                         <h2>SMTP e Integração</h2>
-                        <p>O envio usa a biblioteca padrão <code>smtplib</code> via protocolo <code>STARTTLS (Porta 587)</code>. No ambiente de produção, é projetado para operar com contas SMTP transacionais de alta confiança (como <b>SendPulse, Brevo, ou Resend</b>), garantindo que os alertas de emprego cheguem na caixa de entrada e não caiam no Spam.</p>
-                        
+                        <p>O envio usa a biblioteca padrão <code>smtplib</code> via protocolo
+                            <code>STARTTLS (Porta 587)</code>. No ambiente de produção, é projetado para operar com
+                            contas SMTP transacionais de alta confiança (como <b>SendPulse, Brevo, ou Resend</b>),
+                            garantindo que os alertas de emprego cheguem na caixa de entrada e não caiam no Spam.</p>
+
                         <div class="highlight-box">
-                            <p style="margin:0; color: #166534;"><b>Proteção JWT:</b> O link de descadastramento (Unsubscribe) inserido no rodapé do e-mail é assinado com JSON Web Tokens para evitar manipulação ou exclusão acidental por bots.</p>
+                            <p style="margin:0; color: #166534;"><b>Proteção JWT:</b> O link de descadastramento
+                                (Unsubscribe) inserido no rodapé do e-mail é assinado com JSON Web Tokens para evitar
+                                manipulação ou exclusão acidental por bots.</p>
                         </div>
-                        
+
                         <h2>Painel de Gestão e Auditoria (Admin)</h2>
-                        <p>Os administradores têm acesso a uma interface restrita através da rota <code>/admin/subscribers</code>.</p>
+                        <p>Os administradores têm acesso a uma interface restrita através da rota
+                            <code>/admin/subscribers</code>.</p>
                         <ul>
-                            <li><b>Segurança:</b> Acesso isolado através de <i>Basic Authentication</i>. Nenhum dado é exposto sem as credenciais do sistema.</li>
-                            <li><b>Soft Delete:</b> A técnica de exclusão em banco foi adaptada para manter o histórico. Quando o usuário clica em descadastrar, ele se torna "Inativo", permitindo relatórios reais.</li>
-                            <li><b>Extração de Dados:</b> Há uma rota programática (<code>/admin/subscribers/export</code>) para download instantâneo de toda a tabela em formato CSV, integrando-se rapidamente com Excel/BI.</li>
+                            <li><b>Segurança:</b> Acesso isolado através de <i>Basic Authentication</i>. Nenhum dado é
+                                exposto sem as credenciais do sistema.</li>
+                            <li><b>Soft Delete:</b> A técnica de exclusão em banco foi adaptada para manter o histórico.
+                                Quando o usuário clica em descadastrar, ele se torna "Inativo", permitindo relatórios
+                                reais.</li>
+                            <li><b>Extração de Dados:</b> Há uma rota programática
+                                (<code>/admin/subscribers/export</code>) para download instantâneo de toda a tabela em
+                                formato CSV, integrando-se rapidamente com Excel/BI.</li>
                         </ul>
+                    </div>
+
+                    <!-- SEÇÕES DA API -->
+                    <div id="api-vagas" class="doc-section">
+                        <div class="breadcrumbs">📄 API <span>/</span> Endpoints <span>/</span> Vagas e Motor</div>
+                        <h1>Vagas e Motor (Render)</h1>
+                        <p>O Frontend na Vercel se comunica de forma transparente com o Backend no Render (via proxy
+                            transparente no vercel.json).</p>
+                        <h3>GET /api/vagas</h3>
+                        <p>Retorna a lista de vagas consolidadas no arquivo temporário JSON. Usado pelo Grid Principal.
+                        </p>
+                        <h3>POST /api/analyze</h3>
+                        <p>Realiza o cálculo de TF-IDF entre o CV (PDF/LinkedIn) e a base de vagas, retornando um objeto
+                            com as porcentagens de similaridade.</p>
+                        <h3>POST /api/refresh</h3>
+                        <p>Força a execução assíncrona do motor do Scraper, respondendo status HTTP 202 (Accepted) ou
+                            429 se já estiver rodando.</p>
+                    </div>
+
+                    <div id="api-auth" class="doc-section">
+                        <div class="breadcrumbs">📄 API <span>/</span> Endpoints <span>/</span> Autenticação</div>
+                        <h1>Autenticação de Usuários</h1>
+                        <p>Todas as interações salvam os dados no Supabase (PostgreSQL).</p>
+                        <h3>POST /api/auth/register</h3>
+                        <p>Cria uma nova conta de usuário, retornando 201 e um token JWT inicial.</p>
+                        <h3>POST /api/auth/login</h3>
+                        <p>Autentica o usuário validando as hashes criptografadas no Supabase e gerando um Bearer Token.
+                        </p>
+                        <h3>POST /api/user/profile</h3>
+                        <p>Endpoint protegido (Requer JWT) que aceita Multipart/Form-Data para gravar o PDF e a URL do
+                            LinkedIn no perfil do usuário no banco em nuvem.</p>
+                    </div>
+
+                    <div id="api-newsletter" class="doc-section">
+                        <div class="breadcrumbs">📄 API <span>/</span> Endpoints <span>/</span> Newsletter</div>
+                        <h1>Inscrições de Newsletter</h1>
+                        <h3>POST /api/newsletter</h3>
+                        <p>Grava um novo assinante com suas categorias e frequências diretamente no Supabase. É equipado
+                            com verificações anti-spam básicas e limites (Rate Limit).</p>
+                        <h3>GET /api/newsletter/unsubscribe</h3>
+                        <p>Rota engatilhada pelos links nos e-mails. Valida o Token JWT do e-mail e aplica Soft Delete
+                            no Supabase (status = false).</p>
+                    </div>
+
+                    <div id="api-admin" class="doc-section">
+                        <div class="breadcrumbs">📄 API <span>/</span> Endpoints <span>/</span> Admin</div>
+                        <h1>Endpoints Administrativos</h1>
+                        <p>Todas estas rotas exigem HTTP Basic Auth via cabeçalho. As credenciais padrões devem ser
+                            configuradas nas variáveis de ambiente do Render.</p>
+                        <h3>GET /admin/subscribers</h3>
+                        <p>Retorna um Painel HTML renderizado no servidor com a lista paginada de todos os inscritos
+                            (Supabase).</p>
+                        <h3>GET /admin/subscribers/export</h3>
+                        <p>Gera dinamicamente um arquivo CSV contendo os dados brutos, incluindo inativos e timestamps.
+                        </p>
                     </div>
 
                 </div>
@@ -539,17 +654,35 @@ score = round(similaridade[0][0] * 100)</pre>
     </div>
 
     <script>
+        function toggleMainTab(tab) {
+            document.getElementById('tab-docs').classList.remove('active');
+            document.getElementById('tab-api').classList.remove('active');
+
+            document.getElementById('nav-docs').style.display = 'none';
+            document.getElementById('nav-api').style.display = 'none';
+
+            if (tab === 'docs') {
+                document.getElementById('tab-docs').classList.add('active');
+                document.getElementById('nav-docs').style.display = 'block';
+                switchTab('visao-geral');
+            } else {
+                document.getElementById('tab-api').classList.add('active');
+                document.getElementById('nav-api').style.display = 'block';
+                switchTab('api-vagas');
+            }
+        }
+
         function switchTab(tabId) {
             // Limpa a busca ao clicar no menu
             const searchInput = document.getElementById('searchInput');
-            if(searchInput && searchInput.value.trim() !== '') {
+            if (searchInput && searchInput.value.trim() !== '') {
                 searchInput.value = '';
             }
 
             // Remove active das nav-items
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             // Adiciona na clicada (baseado no event)
-            if(event && event.currentTarget) {
+            if (event && event.currentTarget) {
                 event.currentTarget.classList.add('active');
             }
 
@@ -557,16 +690,16 @@ score = round(similaridade[0][0] * 100)</pre>
             document.querySelectorAll('.doc-section').forEach(el => el.classList.remove('active'));
             // Mostra a selecionada
             document.getElementById(tabId).classList.add('active');
-            
+
             // Volta pro topo da area de scroll
             document.querySelector('.content-area').scrollTop = 0;
         }
 
         // Lógica de Busca Global
-        document.getElementById('searchInput').addEventListener('input', function(e) {
+        document.getElementById('searchInput').addEventListener('input', function (e) {
             const term = e.target.value.toLowerCase().trim();
             const sections = document.querySelectorAll('.doc-section');
-            
+
             if (term === '') {
                 // Restaura a primeira aba se a busca ficar vazia
                 const firstTab = document.querySelector('.nav-item');
@@ -587,10 +720,11 @@ score = round(similaridade[0][0] * 100)</pre>
                     section.classList.remove('active');
                 }
             });
-            
+
             // Volta para o topo para ver os resultados
             document.querySelector('.content-area').scrollTop = 0;
         });
     </script>
 </body>
+
 </html>

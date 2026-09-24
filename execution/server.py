@@ -779,7 +779,7 @@ def handle_contact():
         return jsonify({"error": "Erro interno do servidor ao tentar enviar a mensagem."}), 500
 
 def check_auth(auth):
-    return auth and auth.username == 'admin' and auth.password == 'admin123'
+    return auth and auth.username == 'visuals' and auth.password == 'acessobdusersvagas'
 
 def require_auth():
     return Response('Acesso negado. Por favor, insira as credenciais de administrador.', 401, {'WWW-Authenticate': 'Basic realm="Admin Access"'})

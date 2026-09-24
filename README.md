@@ -4,6 +4,8 @@
 
 Um ecossistema completo para extração automatizada, gestão e notificação de vagas de emprego voltadas para o mercado de tecnologia. A aplicação busca ativamente oportunidades, aplica filtros de concorrência e apresenta uma interface moderna para que candidatos acompanhem o mercado.
 
+🌍 **Acesse a Aplicação Online:** [https://appvagaslinkedin-six.vercel.app/](https://appvagaslinkedin-six.vercel.app/)
+
 ---
 
 ## 🎯 O que o usuário pode fazer na plataforma?
@@ -27,7 +29,7 @@ A plataforma foi desenhada para ser o assistente definitivo na busca por vagas. 
 
 ### 📖 Tutorial Passo a Passo
 Preparamos um guia visual e detalhado para ajudar novos usuários a explorarem todas essas ferramentas. 
-[👉 Clique aqui para acessar o nosso Tutorial de Uso](#link-do-tutorial-sera-inserido-aqui)
+[👉 Clique aqui para acessar o nosso Tutorial de Uso](https://appvagaslinkedin-six.vercel.app/tutorial.html)
 
 ---
 
@@ -51,18 +53,23 @@ A aplicação atua dividida em três pilares principais que operam sozinhos 24 h
 
 ---
 
-## Tecnologias Utilizadas
+## Tecnologias Utilizadas e Infraestrutura em Nuvem
 
-### Backend
+### 🚀 Hospedagem e Deploy
+* **Frontend:** Hospedado gratuitamente na **Vercel** (alta disponibilidade e CDN global).
+* **Backend:** API e rotinas de scraping hospedadas gratuitamente no **Render** (processos contínuos).
+* **Banco de Dados:** **Supabase (PostgreSQL)** hospedado na nuvem garantindo a persistência eterna e escalável dos usuários (possui fallback para SQLite caso executado localmente sem credenciais).
+
+### Backend (Core Engine)
 * **Python 3.x / Flask** (API RESTful)
-* **SQLite** (Bancos de dados locais separados para usuários e newsletter)
+* **PostgreSQL / Supabase** (Armazenamento definitivo na nuvem)
 * **APScheduler** (Agendador de tarefas assíncronas)
 * **PyMuPDF / pytesseract** (Motor de OCR e manipulação de arquivos)
 * **scikit-learn** (Cálculo de similaridade de texto vetorial via TF-IDF)
 
-### Frontend
+### Frontend (UI/UX)
 * **React** (Vite)
-* **CSS Moderno / Glassmorphism** (UI/UX focada em alta usabilidade e estética Premium)
+* **CSS Moderno / Glassmorphism** (Interface focada em alta usabilidade e estética Premium)
 
 ---
 
