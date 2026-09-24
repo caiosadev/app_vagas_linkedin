@@ -143,15 +143,15 @@ const NewsletterModal = ({ isOpen, onClose }) => {
               <div className="checkboxes-container">
                 <label className="checkbox-label">
                   <input type="checkbox" value="Web Design" checked={selectedAreas.includes("Web Design")} onChange={handleAreaChange} />
-                  Web Design
+                  <span>Web Design</span>
                 </label>
                 <label className="checkbox-label">
                   <input type="checkbox" value="Suporte e Atendimento" checked={selectedAreas.includes("Suporte e Atendimento")} onChange={handleAreaChange} />
-                  Suporte e Atendimento
+                  <span>Suporte e Atendimento</span>
                 </label>
                 <label className="checkbox-label">
                   <input type="checkbox" value="Vagas Gerais" checked={selectedAreas.includes("Vagas Gerais")} onChange={handleAreaChange} />
-                  Vagas Gerais / Remoto (Feed)
+                  <span>Vagas Gerais / Remoto (Feed)</span>
                 </label>
               </div>
             </div>

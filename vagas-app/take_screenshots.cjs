@@ -7,29 +7,42 @@ const { chromium } = require('playwright');
 
   console.log("Acessando a aplicação...");
   await page.goto('http://localhost:5173');
-  await page.waitForTimeout(2000); // Wait for animations and data to load
+  await page.waitForTimeout(3000); // Wait for load
 
-  // 1. Painel Principal
+  // The Auth Modal might be open by default if not logged in.
+  console.log("Tirando print do Perfil/Login...");
+  await page.screenshot({ path: 'public/print-perfil.png' });
+
+  // Close the Auth Modal by pressing Escape or clicking outside
+  console.log("Fechando modal de login...");
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(1000);
+  
+  // Just in case it didn't close, try clicking the close button if it exists
+  const closeBtn = await page.$('.modal-overlay.auth-overlay .close-btn');
+  if (closeBtn) {
+    await closeBtn.click();
+    await page.waitForTimeout(1000);
+  } else {
+    // If no close button, try clicking the overlay background to close
+    await page.mouse.click(10, 10);
+    await page.waitForTimeout(1000);
+  }
+
+  // Now we should be on the main panel
   console.log("Tirando print do Painel Principal...");
   await page.screenshot({ path: 'public/print-painel.png' });
 
-  // 2. Perfil
-  console.log("Abrindo Perfil...");
-  await page.click('button.profile-action-btn');
-  await page.waitForTimeout(1000);
-  console.log("Tirando print do Perfil...");
-  await page.screenshot({ path: 'public/print-perfil.png' });
-
-  // Close profile
-  await page.click('button.close-btn');
-  await page.waitForTimeout(1000);
-
-  // 4. Receber vagas por E-mail
+  // Open Newsletter
   console.log("Abrindo Newsletter...");
-  await page.click('button.newsletter-btn');
-  await page.waitForTimeout(1000);
-  console.log("Tirando print da Newsletter...");
-  await page.screenshot({ path: 'public/print-newsletter.png' });
+  try {
+    await page.click('button.newsletter-btn', { force: true });
+    await page.waitForTimeout(1500);
+    console.log("Tirando print da Newsletter...");
+    await page.screenshot({ path: 'public/print-newsletter.png' });
+  } catch (err) {
+    console.log("Erro ao abrir newsletter: ", err);
+  }
 
   await browser.close();
   console.log("Prints salvos com sucesso na pasta public!");
