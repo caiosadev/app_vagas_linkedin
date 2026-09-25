@@ -48,4 +48,26 @@
   background: rgba(255, 255, 255, 0.4);
   border-radius: var(--radius-lg);
   border: 1px dashed rgba(2, 132, 199, 0.3);
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+  
+  .grid-container {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+  }
 }

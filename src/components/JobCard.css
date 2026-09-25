@@ -84,6 +84,7 @@
   padding: 4px 10px;
   border-radius: 20px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .date-badge {
@@ -188,4 +189,16 @@
   transform: none;
   background: #94a3b8;
   color: white;
+}
+
+@media (max-width: 500px) {
+  .job-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .apply-btn {
+    width: 100%;
+    text-align: center;
+  }
 }

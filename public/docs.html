@@ -300,6 +300,38 @@
         .doc-section.active {
             display: block;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .app-window {
+                height: 95vh;
+            }
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                max-height: 250px;
+            }
+            .content-area {
+                padding: 20px;
+            }
+            .topbar {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 12px;
+                gap: 12px;
+            }
+            .search-bar {
+                width: 100%;
+                order: 4;
+            }
+        }
     </style>
 </head>
 

@@ -32,7 +32,8 @@ const JobGrid = ({ jobs, categoryName, newJobIds, clearNewJobs, onOpenNewsletter
             fontWeight: '600',
             fontSize: '0.9rem',
             boxShadow: '0 4px 12px rgba(2, 132, 199, 0.4)',
-            transition: 'all 0.2s ease'
+            transition: 'all 0.2s ease',
+            whiteSpace: 'nowrap'
           }}
           onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
           onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
